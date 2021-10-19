@@ -1,0 +1,4 @@
+﻿  Snake.cpp
+C:\Users\1916016\Desktop\10.05\project\scene\game\Snake.cpp(104,31): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+C:\Users\1916016\Desktop\10.05\project\scene\game\Snake.cpp(181,28): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+  project.vcxproj -> C:\Users\1916016\Desktop\10.05\project\Debug\project.exe

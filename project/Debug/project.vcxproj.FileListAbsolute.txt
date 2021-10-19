@@ -1,0 +1,4 @@
+C:\Users\1916016\Desktop\開発\project\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\project\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\project\Debug\project.pdb
+C:\Users\1916016\Desktop\10.05\project\Debug\project.exe

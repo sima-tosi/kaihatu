@@ -1,0 +1,14 @@
+C:\Users\1916016\Desktop\開発\10.06\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.07\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.07\project\x64\Debug\project.pdb
+C:\Users\1916016\Desktop\10.08\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.11\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.11\project\x64\Debug\project.pdb
+C:\Users\1916016\Desktop\10.12\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.14\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.14\project\x64\Debug\project.pdb
+C:\Users\syunn\OneDrive\デスクトップ\10.14 - コピー\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.14 - コピー\project\x64\Debug\project.pdb
+C:\Users\1916016\Desktop\10.14\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.18\project\x64\Debug\project.exe
+C:\Users\syunn\OneDrive\デスクトップ\10.18\project\x64\Debug\project.pdb
