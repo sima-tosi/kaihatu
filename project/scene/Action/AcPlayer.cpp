@@ -2,6 +2,7 @@
 #include "AcCamera.h"
 #include "AcEnemy.h"
 #include <DxLib.h>
+#include <list>
 
 AcPlayer::AcPlayer(AcCamera* camera)
 {
@@ -50,22 +51,6 @@ void AcPlayer::UpData(KeyDate keyData, double delta)
 	}
 }
 
-bool AcPlayer::EnemyHit(AcEnemy* enemy)
-{
-	Vector2F ePos = enemy->GetPos();
-	Vector2 eSize = enemy->GetSize();
-
-	if (pos.x_ + size.x_ > ePos.x_ - eSize.x_ &&
-		pos.x_ - size.x_ < ePos.x_ + eSize.x_ &&
-		pos.y_ + size.y_ > ePos.y_ - eSize.y_ &&
-		pos.y_ - size.y_ < ePos.y_ + eSize.y_)
-	{
-
-		return true;
-	}
-	return false;
-}
-
 void AcPlayer::Draw(void)
 {
 	float cameraPosX = mCamera->GetPos();
@@ -73,4 +58,33 @@ void AcPlayer::Draw(void)
 	DrawBox(pos.x_ - size.x_ - cameraPosX, pos.y_ - size.y_,
 			pos.x_ + size.x_ - cameraPosX, pos.y_ + size.y_,
 			0xffffff, true);
+}
+
+void AcPlayer::MapHitLR(int vec)
+{
+	Vector2F cPos = { pos.x_ + (size.x_ * vec),pos.y_ };
+	Vector2F tPos = cPos;
+	tPos.y_ -= size.y_;
+	Vector2F dPos = cPos;
+	dPos.y_ += size.y_;
+
+	// どれかマップにあたる
+	{
+		// もどす
+	}
+}
+
+void AcPlayer::MapHitUD(int vec)
+{
+	Vector2F cPos = { pos.x_,pos.y_ + (size.x_ * vec) };
+	Vector2F lPos = cPos;
+	lPos.x_ -= size.x_;
+	Vector2F rPos = cPos;
+	rPos.x_ += size.x_;
+
+	// どれかマップにあたる
+	{
+		// もどす
+		jump = 0.0f;
+	}
 }

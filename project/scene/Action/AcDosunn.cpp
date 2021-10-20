@@ -65,3 +65,23 @@ void AcDosunn::UpData(double delta, Vector2F pPos)
 		}
 	}
 }
+
+void AcDosunn::MapHit(void)
+{
+	// mapäOÇ…èoÇÈÇ∆
+	{
+		kill = true;
+		return;
+	}
+
+	if (dosun == DOSUN::FALL)
+	{
+		//mapÇ…ìñÇΩÇÈÇ∆
+		if (720 - size.y_ < pos.y_)
+		{
+			pos.y_ = 720 - size.y_;
+			dosun = DOSUN::FtoB;
+			stayTime = 1.0;
+		}
+	}
+}

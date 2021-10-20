@@ -18,6 +18,7 @@ public:
 
 	void Init(void) override;
 	void UpData(double delta, Vector2F pPos)override;
+	void MapHit(void)override;
 private:
 	DOSUN dosun;
 	Vector2F startPos;

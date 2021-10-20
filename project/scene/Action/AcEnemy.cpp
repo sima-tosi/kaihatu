@@ -30,3 +30,30 @@ void AcEnemy::Draw(void)
 		pos.x_ - cameraPos + size.x_, pos.y_ + size.y_,
 		0x994C00, true);
 }
+
+void AcEnemy::MapHit(void)
+{
+	// mapŠO‚Éo‚é‚Æ
+	{
+		kill = true;
+		return;
+	}
+
+	// map‚É‚ ‚½‚é‚Æ
+	{
+		vec = -vec;
+		turn = !turn;
+	}
+}
+
+bool AcEnemy::PlayerDeath(Vector2F pPos, Vector2 pSize)
+{
+	if (pos.x_ + size.x_ > pPos.x_ - pSize.x_ &&
+		pos.x_ - size.x_ < pPos.x_ + pSize.x_ &&
+		pos.y_ + size.y_ > pPos.y_ - pSize.y_ &&
+		pos.y_ - size.y_ < pPos.y_ + pSize.y_)
+	{
+		return true;
+	}
+	return false;
+}
