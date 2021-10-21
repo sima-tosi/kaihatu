@@ -1,27 +1,77 @@
 #include "AcMap.h"
+#include "Action.h"
 #include <DxLib.h>
-AcMap::AcMap()
+
+
+AcMap::AcMap(Action* action)
 {
-	// tmx“Ç‚Ýž‚Ý
+	mAction = action;
+	tmx = new TMXobj();
+	tmx->LoadTMX("image/testMap.tmx");
 	Init();
+}
+
+AcMap::~AcMap()
+{
+	delete tmx;
 }
 
 void AcMap::Init(void)
 {
+	mapSize = tmx->GetWorldArea();
+	chipSize = tmx->GetTileSize();
+
 	Vector2 screenSize = mapSize * chipSize;
 	mapScreen = MakeScreen(screenSize.x_, screenSize.y_);
+	ScreenDraw();
 }
 
-bool AcMap::HitMap(Vector2 pos, float jumpVec)
+bool AcMap::HitMap(Vector2F pos, int jumpVec)
 {
-	Vector2 mapPos = pos / chipSize;
+	Vector2 mapPos = { (int)pos.x_, (int)pos.y_};
 
-	if (map[mapPos.y_ * mapSize.x_ + mapPos.x_] != 0)
+	int mapNo = tmx->GetMapData("test", mapPos);
+
+	switch (mapNo)
 	{
+	case 0:
+		return false;
+		break;
+	case 5:
+		ItemBlock(pos, jumpVec);
 		return true;
+		break;
+	case 3:
+		BreakBlock(pos, jumpVec);
+	case 1:
+	case 4:
+		return true;
+		break;
+	case 6:
+		LimitBlock(pos, jumpVec);
+	case 2:
+		return OneMoveBlock(jumpVec);
+	default:
+		break;
+
 	}
 
 	return false;
+}
+
+Vector2 AcMap::BackPos(Vector2F pos,int vec)
+{
+	Vector2 mapPos = { (int)pos.x_, (int)pos.y_ };
+
+	mapPos /= tmx->GetTileSize();
+
+	if (vec == - 1)
+	{
+		++mapPos.x_;
+		++mapPos.y_;
+	}
+
+	return mapPos * chipSize;
 }
 
 void AcMap::ScreenDraw(void)
@@ -29,21 +79,74 @@ void AcMap::ScreenDraw(void)
 	SetDrawScreen(mapScreen);
 	ClsDrawScreen();
 
-	int cnt = 0;
-	for (auto chip : map)
+	auto mapImage = tmx->GetImage();
+	for (auto lays : tmx->GetMapData())
 	{
-		if (chip > 0)
+		int cnt = 0;
+		for (auto chip : lays.second)
 		{
-			DrawGraph(cnt / mapSize.x_, cnt / mapSize.x_,
-					 mapImage[chip - 1], true);
+			if (chip > 0)
+			{
+				DrawGraph((cnt % mapSize.x_) * chipSize.x_, (cnt / mapSize.x_) * chipSize.y_,
+					mapImage[chip- 1], true);
+			}
+			++cnt;
 		}
-		++cnt;
 	}
 
 	SetDrawScreen(DX_SCREEN_BACK);
 }
 
-void AcMap::Draw(Vector2F cameraPos)
+bool AcMap::OneMoveBlock(int vec)
 {
-	DrawGraph(-cameraPos.x_, -cameraPos.y_, mapScreen, true);
+	return vec > 0;
+}
+
+void AcMap::BreakBlock(Vector2F pos, int vec)
+{
+	if (vec < 0)
+	{
+		Vector2 mapPos = { (int)pos.x_ / chipSize.x_,(int)pos.y_ / chipSize.y_ };
+		tmx->ChangeChip("test", mapPos, 0);
+		ScreenDraw();
+	}
+}
+
+void AcMap::LimitBlock(Vector2F pos, int vec)
+{
+	if (vec > 0)
+	{
+		Vector2 mapPos = { (int)pos.x_,(int)pos.y_ };
+		mapPos /= chipSize;
+		int chipPos = mapPos.y_ * mapSize.x_ + mapPos.x_;
+		if (limitBlock.count(chipPos) == 0)
+		{
+			limitBlock.try_emplace(chipPos, 300);
+		}
+		else
+		{
+			--limitBlock[chipPos];
+			if (limitBlock[chipPos] == 0)
+			{
+				tmx->ChangeChip("test", mapPos, 0);
+				ScreenDraw();
+			}
+		}
+	}
+}
+
+void AcMap::ItemBlock(Vector2F pos, int vec)
+{
+	if (vec < 0)
+	{
+		Vector2 mapPos = { (int)pos.x_ / chipSize.x_,(int)pos.y_ / chipSize.y_ };
+		tmx->ChangeChip("test", mapPos, 4);
+		mAction->makeItem(mapPos ,chipSize);
+		ScreenDraw();
+	}
+}
+
+void AcMap::Draw(float cameraPos)
+{
+	DrawGraph(-cameraPos, 0, mapScreen, true);
 }

@@ -32,6 +32,7 @@
     <ClCompile Include="scene\Action\Action.cpp" />
     <ClCompile Include="scene\Game.cpp" />
     <ClCompile Include="scene\Gun\Gun.cpp" />
+    <ClCompile Include="scene\map\TMXobj.cpp" />
     <ClCompile Include="scene\Memory\Memory.cpp" />
     <ClCompile Include="scene\Puzle\Puzle.cpp" />
     <ClCompile Include="scene\Shooting\Shooting.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="scene\Action\Action.h" />
     <ClInclude Include="scene\Game.h" />
     <ClInclude Include="scene\Gun\Gun.h" />
+    <ClInclude Include="scene\map\TMXobj.h" />
     <ClInclude Include="scene\Memory\Memory.h" />
     <ClInclude Include="scene\Puzle\Puzle.h" />
     <ClInclude Include="scene\Scene.h" />

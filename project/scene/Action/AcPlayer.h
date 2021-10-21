@@ -4,10 +4,11 @@
 
 class AcCamera;
 class AcEnemy;
+class AcMap;
 class AcPlayer
 {
 public:
-	AcPlayer(AcCamera* camera);
+	AcPlayer(AcCamera* camera, AcMap* map);
 
 	void Init(void);
 	void UpData(KeyDate keyData, double delta);
@@ -25,7 +26,9 @@ private:
 	Vector2 size;
 	float jump;
 	bool kill;
+	bool jumpFlag;
 
 	AcCamera* mCamera;
+	AcMap* mMap;
 };
 

@@ -32,7 +32,7 @@ Vector2Temple<T>  Vector2Temple<T>::operator- (Vector2Temple<T> vec)
 template<class T>
 Vector2Temple<T>  Vector2Temple<T>::operator/ (Vector2Temple<T> vec)
 {
-	Vector2Temple back = {0,0};
+	Vector2Temple back = {x_,y_};
 
 	if (vec.x_) back.x_ /= vec.x_;
 	if (vec.y_) back.y_ /= vec.y_;
