@@ -1,8 +1,9 @@
 #include "AcTogezo.h"
 
-AcTogezo::AcTogezo(AcCamera* camera)
+AcTogezo::AcTogezo(AcCamera* camera, AcMap* map)
 {
 	mCamera = camera;
+	mMap = map;
 	Init();
 }
 

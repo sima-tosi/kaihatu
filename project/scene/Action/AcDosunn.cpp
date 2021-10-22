@@ -1,9 +1,10 @@
 #include "AcDosunn.h"
 #include <DxLib.h>
 
-AcDosunn::AcDosunn(AcCamera* camera)
+AcDosunn::AcDosunn(AcCamera* camera, AcMap* map)
 {
 	mCamera = camera;
+	mMap = map;
 	Init();
 }
 
@@ -23,9 +24,8 @@ void AcDosunn::UpData(double delta, Vector2F pPos)
 	if (dosun == DOSUN::FALL)
 	{
 		pos.y_ += vec.y_;
-		if (720 - size.y_ < pos.y_)
+		if (MapHitUD(1))
 		{
-			pos.y_ = 720 - size.y_;
 			dosun = DOSUN::FtoB;
 			stayTime = 1.0;
 		}

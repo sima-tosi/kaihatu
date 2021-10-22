@@ -1,23 +1,22 @@
-#include "AcKuribo.h"
-#include "AcCamera.h"
+#include "AcItem.h"
 #include "AcPlayer.h"
 
-AcKuribo::AcKuribo(AcCamera* camera, AcMap* map)
+AcItem::AcItem(AcCamera* camera, AcMap* map, Vector2F pos)
 {
 	mCamera = camera;
 	mMap = map;
+	AcItem::pos = pos;
 	Init();
 }
 
-void AcKuribo::Init(void)
+void AcItem::Init(void)
 {
-	pos = { 1400,600 };
 	vec = { -5,0 };
 	size = { 32,32 };
 	jump = 0;
 }
 
-UniPlay AcKuribo::PlayerDeath(UniPlay player)
+UniPlay AcItem::PlayerDeath(UniPlay player)
 {
 	Vector2F pPos = player->GetPos();
 	Vector2 pSize = player->GetSize();
@@ -27,14 +26,9 @@ UniPlay AcKuribo::PlayerDeath(UniPlay player)
 		pos.y_ + size.y_ > pPos.y_ - pSize.y_ &&
 		pos.y_ - size.y_ < pPos.y_ + pSize.y_)
 	{
-		if (pos.y_ > pPos.y_ + pSize.y_)
-		{
-			kill = true;
-		}
-		else
-		{
-			player->Death();
-		}
+		player->Item();
+		kill = true;
 	}
+
 	return std::move(player);
 }

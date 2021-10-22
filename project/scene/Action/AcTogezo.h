@@ -4,7 +4,7 @@ class AcTogezo :
     public AcEnemy
 {
 public:
-    AcTogezo(AcCamera* camera);
+    AcTogezo(AcCamera* camera, AcMap* map);
 
     void Init(void) override;
 

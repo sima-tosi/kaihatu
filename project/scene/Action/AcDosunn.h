@@ -14,7 +14,7 @@ class AcDosunn :
     public AcEnemy
 {
 public:
-	AcDosunn(AcCamera* camera);
+	AcDosunn(AcCamera* camera, AcMap* map);
 
 	void Init(void) override;
 	void UpData(double delta, Vector2F pPos)override;

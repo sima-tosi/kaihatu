@@ -51,6 +51,9 @@ bool AcMap::HitMap(Vector2F pos, int jumpVec)
 		LimitBlock(pos, jumpVec);
 	case 2:
 		return OneMoveBlock(jumpVec);
+	case 7:
+		mAction->ClearSet();
+		return false;
 	default:
 		break;
 

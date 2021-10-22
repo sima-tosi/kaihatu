@@ -17,10 +17,14 @@ void AcPlayer::Init(void)
 	pos = { 50,100 };
 	jump = 0;
 	jumpFlag = false;
+	item = false;
+	muteki = 0.0;
 }
 
 void AcPlayer::UpData(KeyDate keyData, double delta)
 {
+	muteki -= delta;
+
 	int moveVec = 0;
 	if (keyData[InputID::LEFT][Trg::Now])
 	{
@@ -76,20 +80,24 @@ void AcPlayer::Draw(void)
 
 	DrawBox(pos.x_ - size.x_ - cameraPosX, pos.y_ - size.y_,
 			pos.x_ + size.x_ - cameraPosX, pos.y_ + size.y_,
-			0xffffff, true);
+			0xffffff, item);
 
-	Vector2F testpos = { pos.x_ - cameraPosX,pos.y_ };
-
-	DrawCircle(testpos.x_ + size.x_, testpos.y_ + size.y_, 3, 0xff0000);
-	DrawCircle(testpos.x_ + size.x_, testpos.y_ - size.y_, 3, 0xff0000);
-	DrawCircle(testpos.x_ + size.x_, testpos.y_			 , 3, 0xff0000);
-	DrawCircle(testpos.x_,			 testpos.y_ + size.y_, 3, 0xff0000);
-	DrawCircle(testpos.x_,			 testpos.y_ - size.y_, 3, 0xff0000);
-	DrawCircle(testpos.x_ - size.x_, testpos.y_ + size.y_, 3, 0xff0000);
-	DrawCircle(testpos.x_ - size.x_, testpos.y_ - size.y_, 3, 0xff0000);
-	DrawCircle(testpos.x_ - size.x_, testpos.y_			 , 3, 0xff0000);
 }
-
+void AcPlayer::Death(void)
+{
+	if (muteki <= 0.0)
+	{
+		if (item)
+		{
+			item = false;
+			muteki = 2.0;
+		}
+		else
+		{
+			kill = true;
+		}
+	}
+}
 void AcPlayer::MapHitLR(int vec)
 {
 	Vector2F cPos = { pos.x_ + (size.x_ * vec),pos.y_ };
@@ -98,9 +106,9 @@ void AcPlayer::MapHitLR(int vec)
 	Vector2F dPos = cPos;
 	dPos.y_ += size.y_;
 
-	if(mMap->HitMap(cPos,0) || mMap->HitMap(tPos, 0) || mMap->HitMap(dPos, 0))
+	if (mMap->HitMap(cPos, 0) || mMap->HitMap(tPos, 0) || mMap->HitMap(dPos, 0))
 	{
-		int cPosX = mMap->BackPos(cPos,vec).x_;
+		int cPosX = mMap->BackPos(cPos, vec).x_;
 		pos.x_ = cPosX - (size.x_ * vec);
 	}
 }
@@ -120,7 +128,7 @@ void AcPlayer::MapHitUD(int vec)
 
 	if (stop)
 	{
-		int cPosY = mMap->BackPos(cPos, vec).y_ ;
+		int cPosY = mMap->BackPos(cPos, vec).y_;
 		pos.y_ = cPosY - (size.y_ * vec) - 0.1f;
 		jump = 0.0;
 		if (vec >= 1) jumpFlag = true;

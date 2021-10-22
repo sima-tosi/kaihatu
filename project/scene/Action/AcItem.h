@@ -1,13 +1,11 @@
 #pragma once
 #include "AcEnemy.h"
 
-class AcCamera;
-
-class AcKuribo :
+class AcItem :
     public AcEnemy
 {
 public:
-	AcKuribo(AcCamera* camera, AcMap* map);
+	AcItem(AcCamera* camera, AcMap* map,Vector2F pos);
 
 	void Init(void) override;
 	UniPlay PlayerDeath(UniPlay player) override;

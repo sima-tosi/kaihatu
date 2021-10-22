@@ -1,22 +1,2 @@
-﻿  Action.cpp
-C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Action\Action.cpp(69,45): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
-          with
-          [
-              T=float
-          ]
-C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Action\Action.cpp(69,17): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
-          with
-          [
-              T=float
-          ]
-C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Action\Action.cpp(68,52): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
-          with
-          [
-              T=float
-          ]
-C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Action\Action.cpp(68,24): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
-          with
-          [
-              T=float
-          ]
-  project.vcxproj -> C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\x64\Debug\project.exe
+﻿  Game.cpp
+  project.vcxproj -> C:\Users\syunn\OneDrive\デスクトップ\開発\kaihatu\project\x64\Debug\project.exe

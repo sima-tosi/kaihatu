@@ -16,15 +16,18 @@ public:
 
 	Vector2F GetPos(void) { return pos; };
 	Vector2 GetSize(void) { return size; };
-	void Death(void) { kill = true; };
+	void Death(void);
 	bool GetKill(void) { return kill; };
+	void Item(void) { item = true; }
 private:
 	void MapHitLR(int vec);
 	void MapHitUD(int vec);
 
 	Vector2F pos;
 	Vector2 size;
+	double muteki;
 	float jump;
+	bool item;
 	bool kill;
 	bool jumpFlag;
 
