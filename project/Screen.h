@@ -1,8 +1,8 @@
 #pragma once
 #include<memory>
 
-#define SCREEN_SIZE_X 1280
-#define SCREEN_SIZE_Y 720
+#define SCREEN_SIZE_X 1024
+#define SCREEN_SIZE_Y 768
 class Control;
 class Scene;
 class Screen

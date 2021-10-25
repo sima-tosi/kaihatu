@@ -1,6 +1,6 @@
 #pragma once
 #include "../../Vector2.h"
-#include "../map/TMXobj.h"
+#include "map/TMXobj.h"
 #include <map>
 
 class Action;
@@ -11,8 +11,13 @@ public:
 	~AcMap();
 	void Init(void);
 	void Draw(float cameraPos);
+	void UpData(void);
 	bool HitMap(Vector2F pos, int jumpVec);
 	Vector2 BackPos(Vector2F pos, int vec);
+
+	Vector2 GetMapSize(void) { return mapSize; };
+	Vector2 GetChipSize(void) { return chipSize; };
+	int GetMapData(std::string name,int x, int y);
 private:
 	Vector2 chipSize;
 	Vector2 mapSize;

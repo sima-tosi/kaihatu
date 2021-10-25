@@ -1,10 +1,11 @@
 #include "Action.h"
 #include "AcPlayer.h"
 #include "AcCamera.h"
-#include "AcKuribo.h"
-#include "AcDosunn.h"
+#include "Enemy/AcKuribo.h"
+#include "Enemy/AcDosunn.h"
+#include "Enemy/AcTogezo.h"
 #include "AcMap.h"
-#include "AcItem.h"
+#include "Enemy/AcItem.h"
 #include "../../Vector2.h"
 #include <DxLib.h>
 
@@ -19,18 +20,52 @@ Action::~Action()
 void Action::Init(void)
 {
 	map = new AcMap(&(*this));
-	camera = new AcCamera(2560, 1280);
+	camera = new AcCamera(map->GetMapSize().x_ * map->GetChipSize().x_, 1024);
     player = std::make_unique<AcPlayer>(camera,map);
-	UniEne enemy = std::make_unique<AcDosunn>(camera,map);
-	enemys.push_back(std::move(enemy));
+	SetEnemy();
 
 	limitTime = 120.0;
 	clear = false;
+
+	GameScreen = MakeScreen(1024, 704);
+}
+
+void Action::SetEnemy(void)
+{
+	Vector2 chip = map->GetChipSize();
+	for (int y = 0; y < map->GetMapSize().y_; ++y)
+	{
+		for (int x = 0; x < map->GetMapSize().x_; ++x)
+		{
+			Vector2F pos = { (float)(x * chip.x_),(float)(y * chip.y_) };
+			pos += {32.0f, 32.0f};
+
+			UniEne enemy;
+			switch (map->GetMapData("enemy", x, y))
+			{
+			case 0:
+				break;
+			case 12:
+				enemy = std::make_unique<AcKuribo>(camera, map, pos);
+				enemys.push_back(std::move(enemy));
+				break;
+			case 13:
+				enemy = std::make_unique<AcTogezo>(camera, map, pos);
+				enemys.push_back(std::move(enemy));
+				break;
+			case 14:
+				enemy = std::make_unique<AcDosunn>(camera, map, pos);
+				enemys.push_back(std::move(enemy));
+				break;
+			}
+		}
+	}
 }
 
 int Action::UpDate(KeyDate keyData,double delta)
 {
-	/*limitTime -= delta;*/
+	limitTime -= delta;
+	map->UpData();
 
 	player->UpData(keyData, delta);
 
@@ -56,12 +91,20 @@ int Action::UpDate(KeyDate keyData,double delta)
 void Action::Draw(void)
 {
 	DrawString(0, 0, "ActionScene", 0xffffff);
+	
+	SetDrawScreen(GameScreen);
+	ClsDrawScreen();
+
 	map->Draw(camera->GetPos());
 	player->Draw();
 	for (auto& enemy : enemys)
 	{
 		enemy->Draw();
 	}
+
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	DrawGraph(0, 64, GameScreen, true);
 
 	DrawFormatString(0, 20, 0xffffff, "%f", limitTime);
 }

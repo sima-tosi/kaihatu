@@ -54,25 +54,43 @@
     <ClCompile Include="scene\Action\AcCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\Action\AcEnemy.cpp">
+    <ClCompile Include="scene\Action\Enemy\AcEnemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\Action\AcDosunn.cpp">
+    <ClCompile Include="scene\Action\Enemy\AcDosunn.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\Action\AcKuribo.cpp">
+    <ClCompile Include="scene\Action\Enemy\AcKuribo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\Action\AcTogezo.cpp">
+    <ClCompile Include="scene\Action\Enemy\AcTogezo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="scene\Action\AcMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\map\TMXobj.cpp">
+    <ClCompile Include="scene\Action\map\TMXobj.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\Action\AcItem.cpp">
+    <ClCompile Include="scene\Action\Enemy\AcItem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Shooting\Enemy\ShEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Shooting\Enemy\ShTackle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Shooting\Enemy\ShTriple.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Shooting\Enemy\ShCurve.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Shooting\Enemy\ShItem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Shooting\Enemy\ShTreasure.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,25 +146,43 @@
     <ClInclude Include="scene\Action\AcCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scene\Action\AcEnemy.h">
+    <ClInclude Include="scene\Action\Enemy\AcEnemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scene\Action\AcDosunn.h">
+    <ClInclude Include="scene\Action\Enemy\AcDosunn.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scene\Action\AcKuribo.h">
+    <ClInclude Include="scene\Action\Enemy\AcKuribo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scene\Action\AcTogezo.h">
+    <ClInclude Include="scene\Action\Enemy\AcTogezo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="scene\Action\AcMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scene\map\TMXobj.h">
+    <ClInclude Include="scene\Action\map\TMXobj.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scene\Action\AcItem.h">
+    <ClInclude Include="scene\Action\Enemy\AcItem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Shooting\Enemy\ShEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Shooting\Enemy\ShTackle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Shooting\Enemy\ShTriple.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Shooting\Enemy\ShCurve.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Shooting\Enemy\ShItem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Shooting\Enemy\ShTreasure.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,8 +19,6 @@ bool Screen::Init(void)
 
 	if (DxLib_Init() == -1) return false;
 
-	SetDrawScreen(DX_SCREEN_BACK);
-
 	scene = std::make_unique<Game>();
 
 	return true;
@@ -34,6 +32,7 @@ bool Screen::Run(void)
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		(*control)();
+		SetDrawScreen(DX_SCREEN_BACK);
 		ClsDrawScreen();
 
 		scene = scene->UpDate(std::move(scene),

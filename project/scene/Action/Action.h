@@ -2,6 +2,8 @@
 #include "../Game.h"
 #include "../../Vector2.h"
 #include <list>
+#include<vector>
+#include<map>
 
 class AcPlayer;
 class AcCamera;
@@ -20,8 +22,11 @@ public:
     void ClearSet(void) { clear = true; };
 private:
     void Init(void);
+    void SetEnemy(void);
+    std::map<int, std::vector<int>> enemyImage;
 
     bool clear;
+    int GameScreen;
 
     std::unique_ptr<AcPlayer> player;
     std::list <std::unique_ptr<AcEnemy>> enemys;

@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scene\Action\AcItem.cpp" />
+    <ClCompile Include="scene\Action\Enemy\AcItem.cpp" />
     <ClCompile Include="scene\Action\AcMap.cpp" />
-    <ClCompile Include="scene\Action\AcDosunn.cpp" />
-    <ClCompile Include="scene\Action\AcKuribo.cpp" />
-    <ClCompile Include="scene\Action\AcTogezo.cpp" />
+    <ClCompile Include="scene\Action\Enemy\AcDosunn.cpp" />
+    <ClCompile Include="scene\Action\Enemy\AcKuribo.cpp" />
+    <ClCompile Include="scene\Action\Enemy\AcTogezo.cpp" />
     <ClCompile Include="scene\Action\AcCamera.cpp" />
-    <ClCompile Include="scene\Action\AcEnemy.cpp" />
+    <ClCompile Include="scene\Action\Enemy\AcEnemy.cpp" />
     <ClCompile Include="scene\Action\AcPlayer.cpp" />
     <ClCompile Include="input\Keyboard.cpp" />
     <ClCompile Include="input\Pad.cpp" />
@@ -33,21 +33,27 @@
     <ClCompile Include="scene\Action\Action.cpp" />
     <ClCompile Include="scene\Game.cpp" />
     <ClCompile Include="scene\Gun\Gun.cpp" />
-    <ClCompile Include="scene\map\TMXobj.cpp" />
+    <ClCompile Include="scene\Action\map\TMXobj.cpp" />
     <ClCompile Include="scene\Memory\Memory.cpp" />
     <ClCompile Include="scene\Puzle\Puzle.cpp" />
     <ClCompile Include="scene\Shooting\Shooting.cpp" />
     <ClCompile Include="scene\Snake\Snake.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="scene\Shooting\Enemy\ShCurve.cpp" />
+    <ClCompile Include="scene\Shooting\Enemy\ShEnemy.cpp" />
+    <ClCompile Include="scene\Shooting\Enemy\ShItem.cpp" />
+    <ClCompile Include="scene\Shooting\Enemy\ShTackle.cpp" />
+    <ClCompile Include="scene\Shooting\Enemy\ShTreasure.cpp" />
+    <ClCompile Include="scene\Shooting\Enemy\ShTriple.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scene\Action\AcItem.h" />
+    <ClInclude Include="scene\Action\Enemy\AcItem.h" />
     <ClInclude Include="scene\Action\AcMap.h" />
-    <ClInclude Include="scene\Action\AcDosunn.h" />
-    <ClInclude Include="scene\Action\AcKuribo.h" />
-    <ClInclude Include="scene\Action\AcTogezo.h" />
+    <ClInclude Include="scene\Action\Enemy\AcDosunn.h" />
+    <ClInclude Include="scene\Action\Enemy\AcKuribo.h" />
+    <ClInclude Include="scene\Action\Enemy\AcTogezo.h" />
     <ClInclude Include="scene\Action\AcCamera.h" />
-    <ClInclude Include="scene\Action\AcEnemy.h" />
+    <ClInclude Include="scene\Action\Enemy\AcEnemy.h" />
     <ClInclude Include="scene\Action\AcPlayer.h" />
     <ClInclude Include="detail\Vector2.h" />
     <ClInclude Include="input\Control.h" />
@@ -57,13 +63,19 @@
     <ClInclude Include="scene\Action\Action.h" />
     <ClInclude Include="scene\Game.h" />
     <ClInclude Include="scene\Gun\Gun.h" />
-    <ClInclude Include="scene\map\TMXobj.h" />
+    <ClInclude Include="scene\Action\map\TMXobj.h" />
     <ClInclude Include="scene\Memory\Memory.h" />
     <ClInclude Include="scene\Puzle\Puzle.h" />
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="scene\Shooting\Shooting.h" />
     <ClInclude Include="scene\Snake\Snake.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="scene\Shooting\Enemy\ShCurve.h" />
+    <ClInclude Include="scene\Shooting\Enemy\ShEnemy.h" />
+    <ClInclude Include="scene\Shooting\Enemy\ShItem.h" />
+    <ClInclude Include="scene\Shooting\Enemy\ShTackle.h" />
+    <ClInclude Include="scene\Shooting\Enemy\ShTreasure.h" />
+    <ClInclude Include="scene\Shooting\Enemy\ShTriple.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
