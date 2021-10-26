@@ -2,48 +2,27 @@
 #include "../Game.h"
 #include "../../Vector2.h"
 #include <list>
+#include<vector>
 
-enum class SHOTMODE
+enum class EnemyType
 {
-    NORMAL,
-    TRIPLE,
-    SIDE,
-    PENETRA
-};
-enum class ENENYTYPE
-{
-    NORMAL,
-    TRIPLE,
-    RUSH,
-    BOX,
-    Boss
+    Curve,
+    Triple,
+    Tackle,
+    Treasure,
 };
 
-struct PLAYER
+struct EnemyVecData
 {
     Vector2F pos;
-    SHOTMODE shot;
-    double stayTime;
-    double reStartTime;
-};
-struct SHOT
-{
-    Vector2F pos;
-    Vector2F vec;
-    bool penetra;
-    bool kill;
-};
-struct ENEMY
-{
-    Vector2F pos;
-    Vector2F vec;
-    ENENYTYPE type;
-    double stayTime;
+    EnemyType type;
     double time;
-    int life;
-    int shotCnt = 0;
 };
 
+class ShPlayer;
+class ShShot;
+class ShEnemy;
+class ShBoss;
 class Shooting :
     public Game
 {
@@ -52,30 +31,23 @@ public:
     ~Shooting();
     int UpDate(KeyDate keyData,double delta);
     void Draw(void) override;
+    void EnemyMakeShot(Vector2F pos, Vector2F vec);
+    void PlayerMakeShot(Vector2F pos, Vector2F vec);
+    void SpawnItem(Vector2F ePos);
 private:
     void Init(void);
-    void PlayerMove(KeyDate keyData, double delta);
-    void makeShot(void);
+    void SetEnemyVec(void);
+    void Stage(void);
 
-    void ShotMove(void);
+    std::vector<EnemyVecData> enemyVec;
+    int spawnCnt;
 
-    void EnemyMove(double delta);
-    void RushMove(ENEMY& enemy);
-    void NormalMove(ENEMY& enemy);
-    void TripleMove(ENEMY& enemy);
-    void BoxMove(ENEMY& enemy);
-    void BossMove(ENEMY& enemy);
+    double time;
+    bool Boss = false;
 
-    void makeBossShot(ENEMY enemy);
-
-    bool HitCheck(Vector2F mLU, Vector2F mRD, Vector2F yLU, Vector2F yRD);
-
-    PLAYER player;
-    std::list<SHOT> pShots;
-    std::list<SHOT> eShots;
-    std::list<ENEMY> enemys;
-
-    void MOVEYOU(void);
-    int nvr = 0;
+    ShPlayer* player;
+    std::unique_ptr<ShBoss> boss;
+    std::list<std::unique_ptr<ShShot>> pShots;
+    std::list<std::unique_ptr<ShShot>> eShots;
+    std::list<std::unique_ptr<ShEnemy>> enemys;
 };
-

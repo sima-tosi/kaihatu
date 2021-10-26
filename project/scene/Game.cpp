@@ -18,7 +18,7 @@ Game::~Game()
 
 bool Game::Init(void)
 {
-    playCnt = 0;
+    playCnt = 1;
 
     gameList[0].name = Glist::ACTION;
     gameList[1].name = Glist::SHOOTING;

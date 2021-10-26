@@ -45,6 +45,10 @@
     <ClCompile Include="scene\Shooting\Enemy\ShTackle.cpp" />
     <ClCompile Include="scene\Shooting\Enemy\ShTreasure.cpp" />
     <ClCompile Include="scene\Shooting\Enemy\ShTriple.cpp" />
+    <ClCompile Include="scene\Shooting\ShPlayer.cpp" />
+    <ClCompile Include="scene\Shooting\ShShot.cpp" />
+    <ClCompile Include="scene\Shooting\ShTMX.cpp" />
+    <ClCompile Include="scene\Shooting\ShBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene\Action\Enemy\AcItem.h" />
@@ -76,6 +80,10 @@
     <ClInclude Include="scene\Shooting\Enemy\ShTackle.h" />
     <ClInclude Include="scene\Shooting\Enemy\ShTreasure.h" />
     <ClInclude Include="scene\Shooting\Enemy\ShTriple.h" />
+    <ClInclude Include="scene\Shooting\ShPlayer.h" />
+    <ClInclude Include="scene\Shooting\ShShot.h" />
+    <ClInclude Include="scene\Shooting\ShTMX.h" />
+    <ClInclude Include="scene\Shooting\ShBoss.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
