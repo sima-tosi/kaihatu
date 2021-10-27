@@ -25,6 +25,11 @@ void AcEnemy::UpData(double delta, Vector2F pPos)
 
 		MapHitUD(moveVec);
 	}
+
+	if (pos.y_ - size.y_ > 768)
+	{
+		kill = true;
+	}
 }
 
 void AcEnemy::Draw(void)

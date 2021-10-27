@@ -18,6 +18,7 @@ void ShPlayer::Init(void)
 {
     mode = ShotMode::Non;
     size = { 32,32 };
+    pos = { 132,384 };
 }
 
 void ShPlayer::UpDate(KeyDate keyData, double delta)
@@ -72,9 +73,22 @@ void ShPlayer::UpDate(KeyDate keyData, double delta)
 
 void ShPlayer::Draw(void)
 {
-    DrawBox(pos.x_ - size.x_, pos.y_ - size.y_,
-        pos.x_ + size.x_, pos.y_ + size.y_,
-        0xffffff, true);
+    if (killTime <= 0.0)
+    {
+        DrawBox(pos.x_ - size.x_, pos.y_ - size.y_,
+            pos.x_ + size.x_, pos.y_ + size.y_,
+            0xffffff, true);
+    }
+    else
+    {
+        int frame = killTime / (1.0 / 60);
+        if (frame / 10 % 2 == 0)
+        {
+            DrawBox(pos.x_ - size.x_, pos.y_ - size.y_,
+                pos.x_ + size.x_, pos.y_ + size.y_,
+                0xff0000, true);
+        }
+    }
 }
 
 void ShPlayer::Kill(void)
@@ -86,14 +100,18 @@ void ShPlayer::Kill(void)
 
 bool ShPlayer::ShotHit(Vector2F sPos, Vector2F sSize)
 {
-    if (sPos.x_ + sSize.x_ > pos.x_ - size.x_ &&
-        sPos.x_ - sSize.x_ < pos.x_ + size.x_ &&
-        sPos.y_ + sSize.y_ > pos.y_ - size.y_ &&
-        sPos.y_ - sSize.y_ < pos.y_ + size.y_)
+    if (killTime <= 0.0)
     {
-        Kill();
-        return true;
+        if (sPos.x_ + sSize.x_ > pos.x_ - size.x_ &&
+            sPos.x_ - sSize.x_ < pos.x_ + size.x_ &&
+            sPos.y_ + sSize.y_ > pos.y_ - size.y_ &&
+            sPos.y_ - sSize.y_ < pos.y_ + size.y_)
+        {
+            Kill();
+            return true;
+        }
     }
+
     return false;
 }
 

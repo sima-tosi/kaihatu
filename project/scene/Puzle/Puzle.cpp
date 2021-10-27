@@ -20,6 +20,7 @@ void Puzle::Init(void)
     score = 0;
     chain = 0;
     SetPart();
+    screen = MakeScreen(pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y);
 }
 
 void Puzle::SetPart(void)
@@ -95,8 +96,7 @@ void Puzle::Move(KeyDate keyData)
            PIECE part;
            for (int a = 1; a >= 0; --a)
            {
-               /*part.color = static_cast<P_C>(rand() % 5 + 1);*/
-               part.color = P_C::ALL;
+               part.color = static_cast<P_C>(rand() % 8 + 1);
                part.kill = false;
                part.bombL = false;
                hPiece.insert(hPiece.begin(), part);
@@ -452,41 +452,49 @@ int Puzle::UpDate(KeyDate keyData,double delta)
 
 void Puzle::Draw(void)
 {
-    int size = 32;
+    SetDrawScreen(screen);
+    ClsDrawScreen();
 
-    DrawBox(0, 0, 32 * SIZE_X, 32 * (SIZE_Y - 1), 0xffffff, true);
+    DrawBox(0, 0, pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y, 0xffffff, true);
     DrawFormatString(0, 500, 0xffffff, "%.2f", timelimit);
     DrawFormatString(0, 530, 0xffffff, "SCORE:%d", score);
 
-    int cnt = 0;
     for (auto part : piece)
     {
-        int color = 0xffffff;
-
-        if (part.color == P_C::RED) color = 0xff0000;
-        if (part.color == P_C::BULE) color = 0x00ff00;
-        if (part.color == P_C::GREEN) color = 0x0000ff;
-        if (part.color == P_C::YELLOW) color = 0xFFD400;
-        if (part.color == P_C::PURPLE) color = 0x6F00FF;
-        if (part.color == P_C::JYAMA) color = 0x666666;
-        if (part.color == P_C::BOMB) color = 0x000000;
-        if (part.color == P_C::ALL) color = 0xffffff;
-
-        DrawBox((part.pos.x_) * size, (part.pos.y_) * size - size,
-                (part.pos.x_) * size + size, (part.pos.y_) * size,
-                color, true);
-        DrawFormatString((part.pos.x_) * size, (part.pos.y_) * size - size,
-            0x666666, "%d", cnt);
-        ++cnt;
+        DrawBox((part.pos.x_) * pieceSize.x_, (part.pos.y_) * pieceSize.y_,
+            (part.pos.x_) * pieceSize.x_ + pieceSize.x_, (part.pos.y_) * pieceSize.y_ + pieceSize.y_,
+            GetPieceImage(part.color), true);
     }
 
-    cnt = 0;
-    for (auto part : map)
+    SetDrawScreen(DX_SCREEN_BACK);
+
+    DrawGraph(64, -(pieceSize.y_ / 2), screen, true);
+
+    Vector2 holdOff = { 0,0 };
+    int cnt = 0;
+    for (auto part : hPiece)
     {
-        DrawFormatString((cnt % SIZE_X) * 8 + 300, (cnt / SIZE_X) * 15,
-            0xffffff, "%d", part);
+        DrawBox(holdOff.x_, holdOff.y_ + (cnt * pieceSize.y_),
+            holdOff.x_ + pieceSize.x_, holdOff.y_ + (cnt * pieceSize.y_) + pieceSize.y_,
+            GetPieceImage(part.color), true);
         ++cnt;
     }
 
     DrawString(0, 0, "PuzleScene", 0xffffff);
+}
+
+int Puzle::GetPieceImage(P_C color_)
+{
+    int color = 0xffffff;
+
+    if (color_ == P_C::RED) color = 0xff0000;
+    if (color_ == P_C::BULE) color = 0x00ff00;
+    if (color_ == P_C::GREEN) color = 0x0000ff;
+    if (color_ == P_C::YELLOW) color = 0xFFD400;
+    if (color_ == P_C::PURPLE) color = 0x6F00FF;
+    if (color_ == P_C::JYAMA) color = 0x666666;
+    if (color_ == P_C::BOMB) color = 0x000000;
+    if (color_ == P_C::ALL) color = 0xffffff;
+
+    return color;
 }

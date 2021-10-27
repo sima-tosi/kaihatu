@@ -97,15 +97,18 @@ void AcMap::ScreenDraw(void)
 	auto mapImage = tmx->GetImage();
 	for (auto lays : tmx->GetMapData())
 	{
-		int cnt = 0;
-		for (auto chip : lays.second)
+		if (lays.first != "enemy")
 		{
-			if (chip > 0)
+			int cnt = 0;
+			for (auto chip : lays.second)
 			{
-				DrawGraph((cnt % mapSize.x_) * chipSize.x_, (cnt / mapSize.x_) * chipSize.y_,
-					mapImage[chip- 1], true);
+				if (chip > 0)
+				{
+					DrawGraph((cnt % mapSize.x_) * chipSize.x_, (cnt / mapSize.x_) * chipSize.y_,
+						mapImage[chip - 1], true);
+				}
+				++cnt;
 			}
-			++cnt;
 		}
 	}
 

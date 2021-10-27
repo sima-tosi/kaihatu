@@ -14,7 +14,7 @@ ShBoss::ShBoss(Shooting* _shooting,ShPlayer* _player)
     shotPos2 = { 0, 64 };
     escapeTime = 30.0;
 
-    life = MAX_LIFE / 4;
+    life = MAX_LIFE;
 
     bossMove = BossMove::Entry;
 }

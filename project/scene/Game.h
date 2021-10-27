@@ -30,7 +30,13 @@ public:
 
 private:
     bool Init(void);
+    void GraphDraw(void);
+    void resultDraw(void);
     void TestUpDate(KeyDate keyData);
+
+    double resultTime = 0.0;
+    double readyTime;
+    double finishTime;
 
     std::unique_ptr <Game> game;
     bool play = false;

@@ -14,7 +14,7 @@ AcPlayer::AcPlayer(AcCamera* camera,AcMap* map)
 void AcPlayer::Init(void)
 {
 	size = { 32,64 };
-	pos = { 50,100 };
+	pos = { 50,500 };
 	jump = 0;
 	jumpFlag = false;
 	item = false;
@@ -67,11 +67,10 @@ void AcPlayer::UpData(KeyDate keyData, double delta)
 	moveVec = jump < 0 ? 1 : -1;
 	MapHitUD(moveVec);
 
-	//if (pos.y_ > 720 - size.y_)
-	//{
-	//	pos.y_ = 720 - size.y_;
-	//	jump = 0.0f;
-	//}
+	if (pos.y_ - size.y_ > 768)
+	{
+		kill = true;
+	}
 }
 
 void AcPlayer::Draw(void)

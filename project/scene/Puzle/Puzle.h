@@ -55,6 +55,8 @@ private:
     void Drop(void);
     void Kill(void);
 
+    int GetPieceImage(P_C color_);
+
     void PieceVecKill(int vec);
     int CheckKill(P_C id, int vec, int cnt);
     bool MapPieceCheck(Vector2 vec);
@@ -75,7 +77,10 @@ private:
     int aPiece;
     bool bang;
 
+    Vector2 pieceSize = { 60,60 };
+
     int score;
     int chain;
+    int screen;
 };
 
