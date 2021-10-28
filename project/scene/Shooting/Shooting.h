@@ -16,7 +16,7 @@ struct EnemyVecData
 {
     Vector2F pos;
     EnemyType type;
-    double time;
+    double downTime;
 };
 
 class ShPlayer;
@@ -34,7 +34,11 @@ public:
     void EnemyMakeShot(Vector2F pos, Vector2F vec);
     void PlayerMakeShot(Vector2F pos, Vector2F vec);
     void SpawnItem(Vector2F ePos);
+    void ScoreDown(void) { score -= SCORE_DOWN; };
 private:
+    int SCORE_DOWN = 80;
+    int SCORE_UP = 10;
+
     void Init(void);
     void SetEnemyVec(void);
     void Stage(void);
@@ -42,7 +46,8 @@ private:
     std::vector<EnemyVecData> enemyVec;
     int spawnCnt;
 
-    double time;
+    int score;
+    double downTime;
     bool Boss = false;
 
     ShPlayer* player;

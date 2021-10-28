@@ -2,6 +2,7 @@
 #include "../Game.h"
 #include "../../Vector2.h"
 #include <vector>
+#include <list>
 
 #define SIZE_X 6
 #define SIZE_Y 13
@@ -49,6 +50,7 @@ public:
 private:
     void Init(void);
     void SetPart(void);
+    PIECE GetNext(void);
     bool FallCheck(PIECE part);
 
     void Move(KeyDate keyData);
@@ -66,14 +68,16 @@ private:
     void RRool(void);
 
     MODE mode;
-    double time;
+    double downTime;
     double timelimit;
+    double modeTime;
 
     std::vector<P_C> map;
     std::vector<P_C> killMap;
 
     std::vector<PIECE> piece;
     std::vector<PIECE> hPiece;
+    std::list<PIECE> nPiece;
     int aPiece;
     bool bang;
 

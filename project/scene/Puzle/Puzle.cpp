@@ -14,27 +14,48 @@ void Puzle::Init(void)
 {
     map.resize(SIZE_X * SIZE_Y);
     mode = MODE::MOVE;
-    time = 0.5;
+    downTime = 0.5;
     timelimit = 120.0;
     bang = false;
     score = 0;
     chain = 0;
-    SetPart();
+
+    PIECE mpart;
+    for (int a = 1; a >= 0; --a)
+    {
+        mpart.pos = { a + 2,1 };
+        mpart.color = static_cast<P_C>(rand() % 8 + 1);
+        mpart.kill = false;
+        mpart.bombL = false;
+        piece.insert(piece.begin(), mpart);
+    }
+    aPiece = 1;
+    for (int a = 0; a < 4; ++a)
+    {
+        mpart.color = static_cast<P_C>(rand() % 8 + 1);
+        mpart.kill = false;
+        mpart.bombL = false;
+        nPiece.insert(nPiece.begin(), mpart);
+    }
+
     screen = MakeScreen(pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y);
 }
 
-void Puzle::SetPart(void)
+PIECE Puzle::GetNext(void)
 {
-    aPiece = 1;
     PIECE part;
-    for (int a = 1; a >= 0; --a)
-    {
-        part.pos = { a + 2,1 };
-        part.color = static_cast<P_C>(rand() % 8 + 1);
-        part.kill = false;
-        part.bombL = false;
-        piece.insert(piece.begin(),part);
-    }
+
+    part = *(nPiece.begin());
+    nPiece.pop_front();
+
+    PIECE mpart;
+
+    mpart.color = static_cast<P_C>(rand() % 8 + 1);
+    mpart.kill = false;
+    mpart.bombL = false;
+    nPiece.emplace_back(mpart);
+
+    return part;
 }
 
 bool Puzle::FallCheck(PIECE part)
@@ -66,7 +87,7 @@ void Puzle::Move(KeyDate keyData)
     }
     else if (keyData[InputID::DOWN][Trg::Now])
     {
-        time = 0.0;
+        downTime = 0.0;
     }
     else if (keyData[InputID::UP][Trg::Now] &&
         !keyData[InputID::UP][Trg::Old])
@@ -93,14 +114,8 @@ void Puzle::Move(KeyDate keyData)
     {
        if (hPiece.size() == 0)
        {
-           PIECE part;
-           for (int a = 1; a >= 0; --a)
-           {
-               part.color = static_cast<P_C>(rand() % 8 + 1);
-               part.kill = false;
-               part.bombL = false;
-               hPiece.insert(hPiece.begin(), part);
-           }
+          hPiece.insert(hPiece.begin(), GetNext());
+          hPiece.insert(hPiece.begin(), GetNext());
        }
        std::iter_swap(piece.begin() + ((aPiece + 1) % 2), hPiece.begin());
        std::iter_swap(piece.begin() + aPiece, hPiece.begin() + 1);
@@ -110,9 +125,9 @@ void Puzle::Move(KeyDate keyData)
        aPiece = 1;
     }
 
-    while (time <= 0.0)
+    while (downTime <= 0.0)
     {
-        time += 0.5;
+        downTime += 0.5;
         if (FallCheck(piece[0]) && FallCheck(piece[1]))
         {
             ++piece[0].pos.y_;
@@ -121,29 +136,35 @@ void Puzle::Move(KeyDate keyData)
         else
         {
             mode = MODE::DROP;
+            modeTime = 0.1;
             break;
         }
     }
 }
 void Puzle::Drop(void)
 {
-    bool next = true;
-
-    std::for_each(piece.rbegin(), piece.rend(), [&](PIECE& part)
+    if (modeTime <= 0.0)
     {
-        if (FallCheck(part))
-        {
-            map[part.mapPos()] = P_C::NON;
-            ++part.pos.y_;
-            next = false;
-        }
-        else
-        {
-            map[part.mapPos()] = part.color;
-        }
-    });
+        modeTime = 0.1;
 
-    if (next) mode = MODE::KILL;
+        bool next = true;
+
+        std::for_each(piece.rbegin(), piece.rend(), [&](PIECE& part)
+            {
+                if (FallCheck(part))
+                {
+                    map[part.mapPos()] = P_C::NON;
+                    ++part.pos.y_;
+                    next = false;
+                }
+                else
+                {
+                    map[part.mapPos()] = part.color;
+                }
+            });
+
+        if (next) mode = MODE::KILL;
+    }
 }
 void Puzle::Kill(void)
 {
@@ -220,9 +241,14 @@ void Puzle::Kill(void)
             }
             else
             {
-                time = 0.5;
-                SetPart();
-                mode = MODE::MOVE;
+                downTime = 0.5;
+                
+               piece.insert(piece.begin(), GetNext());
+               piece.insert(piece.begin(), GetNext());
+               piece[0].pos = { 2,1 };
+               piece[1].pos = { 3,1 };
+               aPiece = 1;
+              mode = MODE::MOVE;
             }
         }
     }
@@ -424,7 +450,8 @@ void Puzle::RRool(void)
 
 int Puzle::UpDate(KeyDate keyData,double delta)
 {
-    time -= delta;
+    downTime -= delta;
+    modeTime -= delta;
 
     switch (mode)
     {
@@ -452,12 +479,13 @@ int Puzle::UpDate(KeyDate keyData,double delta)
 
 void Puzle::Draw(void)
 {
+    DrawFormatString(600, 500, 0xffffff, "%.2f", timelimit);
+    DrawFormatString(600, 530, 0xffffff, "SCORE:%d", score);
+
     SetDrawScreen(screen);
     ClsDrawScreen();
 
-    DrawBox(0, 0, pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y, 0xffffff, true);
-    DrawFormatString(0, 500, 0xffffff, "%.2f", timelimit);
-    DrawFormatString(0, 530, 0xffffff, "SCORE:%d", score);
+    DrawBox(0, 0, pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y, 0xffa500, true);
 
     for (auto part : piece)
     {
@@ -480,6 +508,18 @@ void Puzle::Draw(void)
         ++cnt;
     }
 
+    Vector2 nextOff = { 480,0 };
+    cnt = 0;
+    for (auto part : nPiece)
+    {
+        int nCnt = cnt < 2 ? 0 : 1;
+
+        DrawBox(nextOff.x_ + (nCnt * pieceSize.x_), nextOff.y_ + (cnt * pieceSize.y_) + 5,
+                nextOff.x_ + (nCnt * pieceSize.x_) + pieceSize.x_, nextOff.y_ + (cnt * pieceSize.y_) + pieceSize.y_ + 5,
+                GetPieceImage(part.color), true);
+        ++cnt;
+    }
+
     DrawString(0, 0, "PuzleScene", 0xffffff);
 }
 
@@ -493,7 +533,7 @@ int Puzle::GetPieceImage(P_C color_)
     if (color_ == P_C::YELLOW) color = 0xFFD400;
     if (color_ == P_C::PURPLE) color = 0x6F00FF;
     if (color_ == P_C::JYAMA) color = 0x666666;
-    if (color_ == P_C::BOMB) color = 0x000000;
+    if (color_ == P_C::BOMB) color = 0x00ffff;
     if (color_ == P_C::ALL) color = 0xffffff;
 
     return color;

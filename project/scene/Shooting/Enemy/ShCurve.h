@@ -9,7 +9,7 @@ public:
 	void UpData(double delta) override;
 
 private:
-	double time;
+	double downTime;
 	float startPos;
 };
 

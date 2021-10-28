@@ -38,6 +38,7 @@ protected:
 	Vector2F vec;
 	Vector2 size;
 	float jump;
+	bool move = false;
 	bool kill = false;
 	bool turn = false;
 

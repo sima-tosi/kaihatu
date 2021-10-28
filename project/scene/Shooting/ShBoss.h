@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Vector2.h"
+#include <list>
 
 enum class BossMove
 {
@@ -38,6 +39,7 @@ private:
 	Vector2F pos;
 	Vector2F size;
 	Vector2F hitSize;
+	std::list<Vector2F> shotPos;
 	Vector2F shotPos1;
 	Vector2F shotPos2;
 
@@ -47,6 +49,7 @@ private:
 
 	BossMove bossMove;
 
+	int vecY;
 	int life;
 	bool escape = false;
 	double escapeTime;

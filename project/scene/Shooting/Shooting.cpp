@@ -33,7 +33,7 @@ void Shooting::SetEnemyVec(void)
 
 int Shooting::UpDate(KeyDate keyData, double delta)
 {
-    time += delta;
+    downTime += delta;
     player->UpDate(keyData, delta);
     for (auto& shot : eShots)
     {
@@ -41,7 +41,6 @@ int Shooting::UpDate(KeyDate keyData, double delta)
         if (player->ShotHit(shot->GetPos(), shot->GetSize()))
         {
             shot->KillSet();
-            break;
         }
     }
     auto es = std::remove_if(eShots.begin(), eShots.end(), [](std::unique_ptr<ShShot>& shot) {return shot->GetKill(); });
@@ -50,14 +49,27 @@ int Shooting::UpDate(KeyDate keyData, double delta)
     if (Boss)
     {
         boss->UpDate(delta);
+        if (boss->PlayerHit(player->GetPos(), player->GetHitSize()))
+        {
+            player->Kill();
+        }
+
         for (auto& shot : pShots)
         {
             shot->UpData(delta);
+            if (boss->ShotHit(shot->GetPos(), shot->GetSize()))
+            {
+                shot->KillSet();
+                score += SCORE_UP;
+            }
         }
+        auto ps = std::remove_if(pShots.begin(), pShots.end(), [](std::unique_ptr<ShShot>& shot) {return shot->GetKill(); });
+        pShots.erase(ps, pShots.end());
 
         if (boss->finish())
         {
-            return 1;
+            if(eShots.size() == 0)
+            return score;
         }
     }
     else
@@ -82,6 +94,7 @@ int Shooting::UpDate(KeyDate keyData, double delta)
                 if (enemy->ShotHit(shot->GetPos(), shot->GetSize()))
                 {
                     shot->KillSet();
+                    score += SCORE_UP;
                     break;
                 }
             }
@@ -95,7 +108,7 @@ int Shooting::UpDate(KeyDate keyData, double delta)
 }
 void Shooting::Draw(void)
 {
-    DrawString(0, 0, "ShootingScene", 0xffffff);
+    DrawFormatString(0, 0, 0xffffff,"%d",score);
 
     player->Draw();
     for (auto& shot : pShots)
@@ -126,16 +139,16 @@ void Shooting::Draw(void)
 
 void Shooting::Stage(void)
 {
-    if (enemyVec.size() == spawnCnt && eShots.size() == 0)
+    if (enemyVec.size() == spawnCnt)
     {
-        if (enemys.size() == 0)
+        if (enemys.size() == 0 && eShots.size() == 0)
         {
             Boss = true;
             boss = std::make_unique<ShBoss>(this, player);
         }
         return;
     }
-    while(enemyVec[spawnCnt].time < time)
+    while(enemyVec[spawnCnt].downTime < downTime)
     {
         std::unique_ptr<ShEnemy> enemy;
         Vector2F ePos = { 1024 + 32,0 };

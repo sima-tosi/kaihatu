@@ -9,7 +9,6 @@ struct Target
     int size;
     bool life;
 };
-
 class Gun :
     public Game
 {
@@ -24,6 +23,7 @@ private:
 
     int shotCnt;
     int targetCnt;
+    double downTime;
 
     Vector2F shotPos;
     std::list<Target> targets;

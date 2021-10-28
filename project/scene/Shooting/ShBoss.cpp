@@ -7,15 +7,18 @@ ShBoss::ShBoss(Shooting* _shooting,ShPlayer* _player)
 {
     player = _player;
     shooting = _shooting;
-    size = { 64,128 };
+    size = { 128,256};
     hitSize = { 32,32 };
     pos = { 1024 + 64,384 };
-    shotPos1 = { 0,-64 };
-    shotPos2 = { 0, 64 };
+
+    shotPos.emplace_back(0, -64);
+    shotPos.emplace_back(0, -128);
+    shotPos.emplace_back(0, 64);
+    shotPos.emplace_back(0, 128);
     escapeTime = 30.0;
 
     life = MAX_LIFE;
-
+    vecY = 1;
     bossMove = BossMove::Entry;
 }
 
@@ -33,10 +36,13 @@ void ShBoss::UpDate(double delta)
     {
     case BossMove::Entry:
         pos.x_ -= 3;
-        if (pos.x_ <= 1024 - size.x_)
+        if (pos.x_ <= 1024 - size.x_ - 64)
             bossMove = BossMove::Stay;
         break;
     case BossMove::Stay:
+        pos.y_ += 3 * vecY;
+        if (pos.y_ + size.y_ >= 768) vecY = -1;
+        if (pos.y_ - size.y_ <= 0) vecY = 1;
         escapeTime -= delta;
         if(escapeTime <= 0.0)
             bossMove = BossMove::EsCape;
@@ -51,11 +57,13 @@ void ShBoss::UpDate(double delta)
     }
 
     shot1Time += delta;
-    if (shot1Time > 0.5)
+    if (shot1Time > 0.25)
     {
         shot1Time = 0.0;
-        Shot1(pos - shotPos1);
-        Shot1(pos - shotPos2);
+        for (auto shotpos : shotPos)
+        {
+            Shot2(pos - shotpos);
+        }
     }
     if (life <= MAX_LIFE / 2)
     {
@@ -63,8 +71,10 @@ void ShBoss::UpDate(double delta)
         if (shot2Time > 0.5)
         {
             shot2Time = 0.0;
-            Shot2(pos - shotPos1);
-            Shot2(pos - shotPos2);
+            for (auto shotpos : shotPos)
+            {
+                Shot1(pos - shotpos);
+            }
         }
         if (life <= MAX_LIFE / 4)
         {
@@ -94,6 +104,9 @@ void ShBoss::Draw(void)
         5, 0xffff00);
     DrawCircle(pos.x_ + shotPos2.x_, pos.y_ + shotPos2.y_,
         5, 0xffff00);
+
+    DrawLine(0, 10, 1028 * (life / MAX_LIFE), 10, 0xffffff, 10);
+    DrawLine(0, 20, 1028 * (escapeTime / 30.0), 20, 0x00ffff, 10);
 }
 
 bool ShBoss::PlayerHit(Vector2F pPos, Vector2F pSize)

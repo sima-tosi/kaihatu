@@ -17,10 +17,10 @@ ShCurve::~ShCurve()
 void ShCurve::UpData(double delta)
 {
     shotTime -= delta;
-    time += delta;
+    downTime += delta;
 
     pos.x_ += vec.x_;
-    pos.y_ = (sin(time * 2) * 300) + startPos;
+    pos.y_ = (sin(downTime * 2) * 300) + startPos;
 
     if (pos.x_ < 0 - size.x_ ||
         pos.y_ < 0 - size.y_ ||

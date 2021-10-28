@@ -1,2 +1,113 @@
-﻿  Puzle.cpp
+﻿  ShBoss.cpp
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(98,34): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(98,16): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(97,38): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(97,20): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(101,37): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(101,16): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(100,41): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(100,20): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(103,45): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(103,23): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(105,45): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(105,23): warning C4244: '引数': 'T' から 'int' への変換です。データが失われる可能性があります。
+          with
+          [
+              T=float
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(109,26): warning C4244: '引数': 'double' から 'int' への変換です。データが失われる可能性があります。
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\xmemory(714,68): warning C4244: '引数': '_Ty' から 'T' への変換です。データが失われる可能性があります。
+          with
+          [
+              _Ty=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\list(589): message : コンパイル対象の関数 テンプレート インスタンス化 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,int,int>(_Alloc &,_Objty *const ,int &&,int &&)' のリファレンスを確認してください
+          with
+          [
+              _Alloc=std::allocator<std::_List_node<Vector2F,std::_Default_allocator_traits<std::allocator<Vector2F>>::void_pointer>>,
+              _Ty=Vector2F,
+              _Objty=Vector2F
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\list(591): message : コンパイル対象の関数 テンプレート インスタンス化 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,int,int>(_Alloc &,_Objty *const ,int &&,int &&)' のリファレンスを確認してください
+          with
+          [
+              _Alloc=std::allocator<std::_List_node<Vector2F,std::_Default_allocator_traits<std::allocator<Vector2F>>::void_pointer>>,
+              _Ty=Vector2F,
+              _Objty=Vector2F
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\list(1012): message : コンパイル対象の関数 テンプレート インスタンス化 'std::_List_node_emplace_op2<std::allocator<std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_List_node_emplace_op2<int,int>(_Alnode &,int &&,int &&)' のリファレンスを確認してください
+          with
+          [
+              _Ty=Vector2F,
+              _Alloc=std::allocator<Vector2F>,
+              _Alnode=std::allocator<std::_List_node<Vector2F,std::_Default_allocator_traits<std::allocator<Vector2F>>::void_pointer>>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\list(1018): message : コンパイル対象の関数 テンプレート インスタンス化 'std::_List_node_emplace_op2<std::allocator<std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_List_node_emplace_op2<int,int>(_Alnode &,int &&,int &&)' のリファレンスを確認してください
+          with
+          [
+              _Ty=Vector2F,
+              _Alloc=std::allocator<Vector2F>,
+              _Alnode=std::allocator<std::_List_node<Vector2F,std::_Default_allocator_traits<std::allocator<Vector2F>>::void_pointer>>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\list(992): message : コンパイル対象の関数 テンプレート インスタンス化 'std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer> *std::list<_Ty,_Alloc>::_Emplace<int,int>(std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer> *const ,int &&,int &&)' のリファレンスを確認してください
+          with
+          [
+              _Ty=Vector2F,
+              _Alloc=std::allocator<Vector2F>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\list(993): message : コンパイル対象の関数 テンプレート インスタンス化 'std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer> *std::list<_Ty,_Alloc>::_Emplace<int,int>(std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer> *const ,int &&,int &&)' のリファレンスを確認してください
+          with
+          [
+              _Ty=Vector2F,
+              _Alloc=std::allocator<Vector2F>
+          ]
+C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\scene\Shooting\ShBoss.cpp(14): message : コンパイル対象の関数 テンプレート インスタンス化 'void std::list<Vector2F,std::allocator<Vector2F>>::emplace_back<int,int>(int &&,int &&)' のリファレンスを確認してください
   project.vcxproj -> C:\Users\1916016\Desktop\開発\新しいフォルダー\kaihatu\project\x64\Debug\project.exe

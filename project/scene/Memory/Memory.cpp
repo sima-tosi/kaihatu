@@ -24,13 +24,14 @@ void Memory::Init(void)
 
     level = 2;
     miss = false;
-
-    SetLevel();
+    mode = MODE::CHECK;
 }
 
 void Memory::SetLevel(void)
 {
     ++level;
+    
+    if (level > 28) miss = true;
 
     mode = MODE::MEMORY;
     check.clear();
@@ -62,14 +63,8 @@ int Memory::UpDate(KeyDate keyData, double delta)
         break;
     }
 
-    if (keyData[InputID::SPACE][Trg::Now] &&
-        !keyData[InputID::SPACE][Trg::Old])
-    {
-        return 0;
-    }
-
     limit -= delta;
-    if (miss) return level - 1;
+    if (miss && limit < 0.0) return level - 3;
     return -1;
 }
 void Memory::MemoryUpData(void)
@@ -113,19 +108,24 @@ void Memory::ResUpData(KeyDate keyData)
     if (check.size() == answer.size())
     {
         mode = MODE::CHECK;
+        limit = 1.5;
+
+        for (int ni = 0; ni < answer.size(); ++ni)
+        {
+            if (answer[ni] != check[ni])
+            {
+                miss = true;
+                // ‰¹
+            }
+        }
     }
 }
 void Memory::CheckUpData(void)
 {
-    for (int ni = 0; ni < answer.size(); ++ni)
+    if (limit < 0.0)
     {
-        if (answer[ni] != check[ni])
-        {
-            miss = true;
-        }
+        if (!miss) SetLevel();
     }
-
-    if(!miss) SetLevel();
 }
 
 void Memory::Draw(void)
@@ -159,25 +159,27 @@ void Memory::ResDraw(void)
     int cnt = 0;
     for (auto oao : check)
     {
-        DrawBox(110 * (cnt % 8), 110 * (cnt / 8) + 100,
-            110 * (cnt % 8) + 100, 110 * (cnt / 8) + 200,
+        DrawBox(110 * (cnt % 9), 110 * (cnt / 9) + 50,
+            110 * (cnt % 9) + 100, 110 * (cnt / 9) + 150,
             choices[oao].image, true);
         ++cnt;
     }
     for (cnt; cnt < answer.size(); ++cnt)
     {
-        DrawBox(110 * (cnt % 8), 110 * (cnt / 8) + 100,
-            110 * (cnt % 8) + 100, 110 * (cnt / 8) + 200,
+        DrawBox(110 * (cnt % 9), 110 * (cnt / 9) + 50,
+            110 * (cnt % 9) + 100, 110 * (cnt / 9) + 150,
             0x888888, true);
     }
+
+
 }
 void Memory::CheckDraw(void)
 {
     int cnt = 0;
     for (auto oao : check)
     {
-        DrawBox(110 * (cnt % 8), 110 * (cnt / 8) + 100,
-            110 * (cnt % 8) + 100, 110 * (cnt / 8) + 200,
+        DrawBox(110 * (cnt % 9), 110 * (cnt / 9) + 50,
+            110 * (cnt % 9) + 100, 110 * (cnt / 9) + 150,
             choices[oao].image, true);
         ++cnt;
     }
@@ -185,8 +187,8 @@ void Memory::CheckDraw(void)
 
     for (auto oao : answer)
     {
-        DrawBox(110 * (cnt % 8), 110 * (cnt / 8) + 500,
-            110 * (cnt % 8) + 100, 110 * (cnt / 8) + 600,
+        DrawBox(110 * (cnt % 9), 110 * (cnt / 9) + 384 + 50,
+            110 * (cnt % 9) + 100, 110 * (cnt / 9) + 384 + 150,
             choices[oao].image, true);
         ++cnt;
     }

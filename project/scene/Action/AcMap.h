@@ -12,7 +12,7 @@ public:
 	void Init(void);
 	void Draw(float cameraPos);
 	void UpData(void);
-	bool HitMap(Vector2F pos, int jumpVec);
+	bool HitMap(Vector2F pos, int jumpVec, bool effect);
 	Vector2 BackPos(Vector2F pos, int vec);
 
 	Vector2 GetMapSize(void) { return mapSize; };

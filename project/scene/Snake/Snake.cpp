@@ -27,7 +27,7 @@ void Snake::Init(void)
     moveDir = { DIR::RIGHT,DIR::RIGHT };
     turn = false;
 
-    timeLimit = 30.0;
+    timeLimit = MAX_TIME;
     point = 0;
 
     SetItem();
@@ -39,7 +39,7 @@ void Snake::GetItem(void)
     body.push_back(body[body.size() - 1]);
     point += 5;
 
-    timeLimit += 5.0;
+    timeLimit += 3.5;
     if (item.destor) breakTime = 3.0;
 
     SetItem();
@@ -214,31 +214,49 @@ int Snake::UpDate(KeyDate keyData,double delta)
 
 void Snake::Draw(void)
 {
-    for (auto b : body)
-    {
-        DrawCircle(b.pos.x_ * 50 + 25,
-            b.pos.y_ * 50 + 55, 10, 0xffff00);
-    }
+    int size = 64;
+
+    DrawBox(0, 0, size * 12, size * 12, 0xffffff, true);
+
     for (int x = 0; x < 10; ++x)
     {
         for (int y = 0; y < 10; ++y)
         {
-            DrawBox(x * 50, y * 50 + 30,
-                (x + 1) * 50, (y + 1) * 50 + 30,
-                0x00ffff, obs[y * 10 + x]);
+            if (obs[y * 10 + x])
+            {
+                DrawBox(x * size + size, y * size + size,
+                    (x + 1) * size + size, (y + 1) * size + size,
+                    0x999999, true);
+            }
+            else
+            {
+                DrawBox(x * size + size, y * size + size,
+                    (x + 1) * size + size, (y + 1) * size + size,
+                    0x00ff00, true);
+            }
+
             if (item.pos.x_ == x && item.pos.y_ == y)
             {
-                DrawCircle(x * 50 + 25, y * 50 + 55,
+                DrawCircle(x * size + size / 2 + size, y * size + size / 2 + size,
                     8, 0xff0000,item.destor);
-                DrawLine(x * 50, y * 50 + 70,
-                    x * 50 + 50 * (item.limit / MAX_TIME), y * 50 + 70, 0xff0000,5);
+                DrawLine(x * size + size, y * size + (size / 4 * 3) + size,
+                        x * size + size * (item.limit / MAX_TIME) + size,
+                        y * size + size + (size / 4 * 3), 0xff0000,5);
             }
         }
     }
-    DrawLine(0, 10,
-        700 * (timeLimit / 100), 10, 0xff0000, 5);
-    DrawLine(0, 15,
-        700 * (breakTime / 3), 15, 0xff0000, 5);
+
+    for (auto b : body)
+    {
+        DrawCircle(b.pos.x_ * size + size / 2 + size,
+            b.pos.y_ * size + size / 2 + size, 10, 0xff0000);
+    }
+
+    DrawLine(780, 768,
+        780, 768 - (768 * (timeLimit / MAX_TIME)), 0xff0000, 10);
+    DrawLine(800, 768,
+        800, 768 - (768 * (breakTime / 3.0)), 0x00ff00, 10);
+
     //DrawString(0, 0, "SnakeScene", 0xffffff);
     if(miss) DrawString(50, 0, "miss", 0xffffff);
 }

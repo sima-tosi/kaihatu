@@ -36,6 +36,7 @@ private:
     void CheckDraw(void);
 
     double limit;
+    double next;
 
     MODE mode;
     std::vector<CHOICE> choices;

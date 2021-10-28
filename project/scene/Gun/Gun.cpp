@@ -11,7 +11,7 @@ Gun::~Gun()
 
 void Gun::Init(void)
 {
-    shotPos = { 640,360 };
+    shotPos = { 512,360 };
 
     targetCnt = shotCnt = 30;
 
@@ -27,9 +27,9 @@ void Gun::SetTarget(void)
 
     Target target;
 
-    target.pos = { (float)((224 * start) - 32) ,626.0f };
-    target.size = 32;
-    target.vec = { 2.3f * (goal - start),-25 };
+    target.pos = { (float)((1024 / 6 * start)) ,626.0f };
+    target.size = 30;
+    target.vec = { 1.0f * (goal - start),-25.0f };
     target.life = true;
 
     targets.push_back(target);
@@ -39,6 +39,8 @@ void Gun::SetTarget(void)
 
 int Gun::UpDate(KeyDate keyData,double delta)
 {
+    downTime += delta;
+
     if (keyData[InputID::UP][Trg::Now])
     {
         shotPos.y_ -= 10;
@@ -90,13 +92,18 @@ int Gun::UpDate(KeyDate keyData,double delta)
         [](auto&& target) {return !(target.life); });
     targets.erase(o, targets.end());
 
-    if (targets.size() == 0)
+    if (downTime >= 2.0)
     {
+        downTime = 0.0;
         if (targetCnt > 0)
         {
             SetTarget();
         }
-        else return point;
+        else
+        {
+            if(targets.size() == 0)
+            return point;
+        }
     }
 
     return -1;
@@ -119,7 +126,7 @@ void Gun::Draw(void)
 
     for (int b = 1; b <= 5; ++b)
     {
-        DrawBox((224 * b) - 64, 594, (224 * b), 720, 0xffffff, true);
+        DrawBox ((1024 / 6 * b) - 32, 594, (1024 / 6 * b) + 32, 768, 0xffffff, true);
     }
 
     DrawCircle(shotPos.x_, shotPos.y_, 20, 0xff0000,false);

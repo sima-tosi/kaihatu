@@ -26,7 +26,7 @@ bool ShTMX::LoadTMX(std::string FName)
 		enemyData.pos.x_ = atrInt(data, "x");
 		enemyData.pos.y_ = atrInt(data, "y");
 		enemyData.type   = (EnemyType)(atrInt(data, "type"));
-		enemyData.time   = atrDouble(data, "time");
+		enemyData.downTime   = atrDouble(data, "time");
 
 		enemyDataVec.push_back(enemyData);
 

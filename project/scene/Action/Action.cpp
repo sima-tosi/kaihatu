@@ -82,9 +82,19 @@ int Action::UpDate(KeyDate keyData,double delta)
 
 	if (player->GetKill() || limitTime < 0.0)
 	{
-		return 0;
+		float score = player->GetPos().x_;
+		score /= map->GetMapSize().x_ * map->GetChipSize().x_;
+		score *= 50;
+
+		return (int)score;
 	}
-	if (clear) return 1;
+	if (clear)
+	{
+		double score = 50.0;
+		score += limitTime;
+
+		return (int)score;
+	}
 	return -1;
 }
 

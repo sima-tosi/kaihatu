@@ -26,7 +26,7 @@ void AcMap::Init(void)
 	ScreenDraw();
 }
 
-bool AcMap::HitMap(Vector2F pos, int jumpVec)
+bool AcMap::HitMap(Vector2F pos, int jumpVec,bool effect)
 {
 	Vector2 mapPos = { (int)pos.x_, (int)pos.y_};
 
@@ -42,23 +42,27 @@ bool AcMap::HitMap(Vector2F pos, int jumpVec)
 	case 3:
 	case 4:
 	case 5:
+		if(effect)
 		LimitBlock(pos, jumpVec);
 		return OneMoveBlock(jumpVec);
 	case 6:
 	case 7:
 		return true;
 	case 8:
+		if (effect)
 		ItemBlock(pos, jumpVec);
 		return true;
 		break;
 	case 9:
+		if (effect)
 		BreakBlock(pos, jumpVec);
 		return true;
 	case 10:
 		return OneMoveBlock(jumpVec);
 	case 11:
+		if (effect)
 		mAction->ClearSet();
-		return false;
+		return true;
 	default:
 		break;
 

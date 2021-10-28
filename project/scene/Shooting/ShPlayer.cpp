@@ -18,6 +18,7 @@ void ShPlayer::Init(void)
 {
     mode = ShotMode::Non;
     size = { 32,32 };
+    hitSize = { 8,8 };
     pos = { 132,384 };
 }
 
@@ -93,19 +94,23 @@ void ShPlayer::Draw(void)
 
 void ShPlayer::Kill(void)
 {
-    kill = true;
-    killTime = 3.0;
-    mode = ShotMode::Non;
+    if (killTime <= 0.0)
+    {
+        shooting->ScoreDown();
+        kill = true;
+        killTime = 3.0;
+        mode = ShotMode::Non;
+    }
 }
 
 bool ShPlayer::ShotHit(Vector2F sPos, Vector2F sSize)
 {
     if (killTime <= 0.0)
     {
-        if (sPos.x_ + sSize.x_ > pos.x_ - size.x_ &&
-            sPos.x_ - sSize.x_ < pos.x_ + size.x_ &&
-            sPos.y_ + sSize.y_ > pos.y_ - size.y_ &&
-            sPos.y_ - sSize.y_ < pos.y_ + size.y_)
+        if (sPos.x_ + sSize.x_ > pos.x_ - hitSize.x_ &&
+            sPos.x_ - sSize.x_ < pos.x_ + hitSize.x_ &&
+            sPos.y_ + sSize.y_ > pos.y_ - hitSize.y_ &&
+            sPos.y_ - sSize.y_ < pos.y_ + hitSize.y_)
         {
             Kill();
             return true;

@@ -13,7 +13,7 @@ AcPlayer::AcPlayer(AcCamera* camera,AcMap* map)
 }
 void AcPlayer::Init(void)
 {
-	size = { 32,64 };
+	size = { 30,60 };
 	pos = { 50,500 };
 	jump = 0;
 	jumpFlag = false;
@@ -105,10 +105,10 @@ void AcPlayer::MapHitLR(int vec)
 	Vector2F dPos = cPos;
 	dPos.y_ += size.y_;
 
-	if (mMap->HitMap(cPos, 0) || mMap->HitMap(tPos, 0) || mMap->HitMap(dPos, 0))
+	if (mMap->HitMap(cPos, 0, true) || mMap->HitMap(tPos, 0, true) || mMap->HitMap(dPos, 0, true))
 	{
 		int cPosX = mMap->BackPos(cPos, vec).x_;
-		pos.x_ = cPosX - (size.x_ * vec);
+		pos.x_ = cPosX - (size.x_ * vec) - 0.1 * (vec);
 	}
 }
 
@@ -121,9 +121,9 @@ void AcPlayer::MapHitUD(int vec)
 	rPos.x_ += size.x_;
 
 	bool stop = false;
-	stop = mMap->HitMap(cPos, vec) || stop;
-	stop = mMap->HitMap(lPos, vec) || stop;
-	stop = mMap->HitMap(rPos, vec) || stop;
+	stop = mMap->HitMap(cPos, vec, true) || stop;
+	stop = mMap->HitMap(lPos, vec, true) || stop;
+	stop = mMap->HitMap(rPos, vec, true) || stop;
 
 	if (stop)
 	{

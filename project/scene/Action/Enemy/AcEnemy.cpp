@@ -11,8 +11,9 @@ AcEnemy::AcEnemy()
 void AcEnemy::UpData(double delta, Vector2F pPos)
 {
 	float cameraPos = mCamera->GetPos();
+	if (!move) move = cameraPos + 1280 > pos.x_ - size.x_;
 
-	if (cameraPos + 1280 > pos.x_ - size.x_)
+	if (move)
 	{
 		pos.x_ += vec.x_;
 		int moveVec = vec.x_ > 0 ? 1 : -1;
@@ -78,7 +79,7 @@ bool AcEnemy::MapHitLR(int vec)
 	Vector2F dPos = cPos;
 	dPos.y_ += size.y_;
 
-	if (mMap->HitMap(cPos, 0) || mMap->HitMap(tPos, 0) || mMap->HitMap(dPos, 0))
+	if (mMap->HitMap(cPos, 0, false) || mMap->HitMap(tPos, 0, false) || mMap->HitMap(dPos, 0, false))
 	{
 		int cPosX = mMap->BackPos(cPos, vec).x_;
 		pos.x_ = cPosX - (size.x_ * vec);
@@ -96,9 +97,9 @@ bool AcEnemy::MapHitUD(int vec)
 	rPos.x_ += size.x_;
 
 	bool stop = false;
-	stop = mMap->HitMap(cPos, vec) || stop;
-	stop = mMap->HitMap(lPos, vec) || stop;
-	stop = mMap->HitMap(rPos, vec) || stop;
+	stop = mMap->HitMap(cPos, vec, false) || stop;
+	stop = mMap->HitMap(lPos, vec, false) || stop;
+	stop = mMap->HitMap(rPos, vec, false) || stop;
 
 	if (stop)
 	{
