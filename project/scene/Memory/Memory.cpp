@@ -64,7 +64,7 @@ int Memory::UpDate(KeyDate keyData, double delta)
     }
 
     limit -= delta;
-    if (miss && limit < 0.0) return level - 3;
+    if (miss && limit < 0.0) return (level - 3) * 10;
     return -1;
 }
 void Memory::MemoryUpData(void)
@@ -171,7 +171,18 @@ void Memory::ResDraw(void)
             0x888888, true);
     }
 
-
+    DrawBox(512 - 32, (768 / 4) * 3 - 32 - 64,
+            512 + 32, (768 / 4) * 3 + 32 - 64,
+            choices[0].image, true);
+    DrawBox(512 - 32 - 64, (768 / 4) * 3 - 32,
+            512 + 32 - 64, (768 / 4) * 3 + 32,
+            choices[1].image, true);
+    DrawBox(512 - 32, (768 / 4) * 3 - 32 + 64,
+            512 + 32, (768 / 4) * 3 + 32 + 64,
+            choices[2].image, true);
+    DrawBox(512 - 32 + 64, (768 / 4) * 3 - 32,
+            512 + 32 + 64, (768 / 4) * 3 + 32,
+            choices[3].image, true);
 }
 void Memory::CheckDraw(void)
 {

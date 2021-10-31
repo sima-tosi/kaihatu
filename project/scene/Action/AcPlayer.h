@@ -27,6 +27,8 @@ private:
 	Vector2 size;
 	double muteki;
 	float jump;
+	int image[2];
+
 	bool item;
 	bool kill;
 	bool jumpFlag;

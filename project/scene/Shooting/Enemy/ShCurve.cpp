@@ -2,12 +2,13 @@
 #include "../Shooting.h"
 #include <math.h>
 
-ShCurve::ShCurve(Shooting* _shooting, Vector2F _pos)
+ShCurve::ShCurve(Shooting* _shooting, Vector2F _pos,int _image)
 {
     scene = _shooting;
     pos = _pos;
     startPos = pos.y_;
     vec = { -5.0,0 };
+    image = _image;
 }
 
 ShCurve::~ShCurve()

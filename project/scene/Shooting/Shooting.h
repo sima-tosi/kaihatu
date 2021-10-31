@@ -46,6 +46,8 @@ private:
     std::vector<EnemyVecData> enemyVec;
     int spawnCnt;
 
+    std::vector<int> eImage;
+
     int score;
     double downTime;
     bool Boss = false;

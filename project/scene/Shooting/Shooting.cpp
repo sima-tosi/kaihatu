@@ -20,6 +20,8 @@ Shooting::~Shooting()
 }
 void Shooting::Init(void)
 {
+    eImage.resize(8);
+    LoadDivGraph("image/Shooting/enemy.png", 8, 4, 2, 64, 64, &eImage[0]);
     player = new ShPlayer(this);
     SetEnemyVec();
 }
@@ -69,7 +71,7 @@ int Shooting::UpDate(KeyDate keyData, double delta)
         if (boss->finish())
         {
             if(eShots.size() == 0)
-            return score;
+            return score / 8;
         }
     }
     else
@@ -111,10 +113,6 @@ void Shooting::Draw(void)
     DrawFormatString(0, 0, 0xffffff,"%d",score);
 
     player->Draw();
-    for (auto& shot : pShots)
-    {
-        shot->Draw();
-    }
 
     if (Boss)
     {
@@ -134,6 +132,11 @@ void Shooting::Draw(void)
         {
             shot->Draw();
         }
+    }
+
+    for (auto& shot : pShots)
+    {
+        shot->Draw();
     }
 }
 
@@ -157,16 +160,16 @@ void Shooting::Stage(void)
         switch (enemyVec[spawnCnt].type)
         {
         case EnemyType::Curve:
-            enemy = std::make_unique<ShCurve>(this, ePos);
+            enemy = std::make_unique<ShCurve>(this, ePos,eImage[0]);
             break;
         case EnemyType::Triple:
-            enemy = std::make_unique<ShTriple>(this, ePos);
+            enemy = std::make_unique<ShTriple>(this, ePos, eImage[1]);
             break;
         case EnemyType::Tackle:
-            enemy = std::make_unique<ShTackle>(player, ePos);
+            enemy = std::make_unique<ShTackle>(player, ePos, eImage[2]);
             break;
         case EnemyType::Treasure:
-            enemy = std::make_unique<ShTreasure>(this, ePos);
+            enemy = std::make_unique<ShTreasure>(this, ePos, eImage[3]);
             break;
         }
         enemys.emplace_back(std::move(enemy));
@@ -192,7 +195,8 @@ void Shooting::PlayerMakeShot(Vector2F pos, Vector2F vec)
 void Shooting::SpawnItem(Vector2F ePos)
 {
     std::unique_ptr<ShEnemy> enemy;
-    enemy = std::make_unique<ShItem>(player, ePos);
+    int iNo = rand() % 3 + 1;
+    enemy = std::make_unique<ShItem>(player, ePos, eImage[3 + iNo], iNo);
     enemys.emplace_back(std::move(enemy));
 
 }

@@ -1,11 +1,12 @@
 #include "AcItem.h"
 #include "../AcPlayer.h"
 
-AcItem::AcItem(AcCamera* camera, AcMap* map, Vector2F pos)
+AcItem::AcItem(AcCamera* camera, AcMap* map, Vector2F pos, int _image)
 {
 	mCamera = camera;
 	mMap = map;
 	AcItem::pos = pos;
+	image = _image;
 	Init();
 }
 

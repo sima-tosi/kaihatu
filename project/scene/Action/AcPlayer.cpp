@@ -13,6 +13,8 @@ AcPlayer::AcPlayer(AcCamera* camera,AcMap* map)
 }
 void AcPlayer::Init(void)
 {
+	LoadDivGraph("image/Action/player.png", 2, 2, 1, 60, 120, image);
+
 	size = { 30,60 };
 	pos = { 50,500 };
 	jump = 0;
@@ -77,10 +79,18 @@ void AcPlayer::Draw(void)
 {
 	float cameraPosX = mCamera->GetPos();
 
-	DrawBox(pos.x_ - size.x_ - cameraPosX, pos.y_ - size.y_,
-			pos.x_ + size.x_ - cameraPosX, pos.y_ + size.y_,
-			0xffffff, item);
-
+	if (item)
+	{
+		DrawGraph(pos.x_ - size.x_ - cameraPosX,
+			pos.y_ - size.y_,
+			image[1], true);
+	}
+	else
+	{
+		DrawGraph(pos.x_ - size.x_ - cameraPosX,
+			pos.y_ - size.y_,
+			image[0], true);
+	}
 }
 void AcPlayer::Death(void)
 {
@@ -132,8 +142,5 @@ void AcPlayer::MapHitUD(int vec)
 		jump = 0.0;
 		if (vec >= 1) jumpFlag = true;
 	}
-	else
-	{
-		int mvnaet = 0;
-	}
+
 }

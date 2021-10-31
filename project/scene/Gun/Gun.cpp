@@ -17,6 +17,10 @@ void Gun::Init(void)
 
     SetTarget();
 
+    targetImage = LoadGraph("image/Gun/target.png");
+    bangImage = LoadGraph("image/Gun/bang.png");
+    gunImage = LoadGraph("image/Gun/gun.png");
+
     point = 0;
 }
 
@@ -82,15 +86,28 @@ int Gun::UpDate(KeyDate keyData,double delta)
                 {
                     target.life = false;
                     ++point;
+                    HitTarget ht;
+                    ht.pos = target.pos;
+                    ht.size = target.size;
+                    ht.time = 0.5;
+                    hTargets.emplace_back(ht);
                 }
             }
             --shotCnt;
         }
     }
 
+    for (auto& ht : hTargets)
+    {
+        ht.time -= delta;
+    }
+
     auto o = std::remove_if(targets.begin(), targets.end(),
         [](auto&& target) {return !(target.life); });
     targets.erase(o, targets.end());
+    auto ho = std::remove_if(hTargets.begin(), hTargets.end(),
+        [](auto&& target) {return target.time <= 0.0; });
+    hTargets.erase(ho, hTargets.end());
 
     if (downTime >= 2.0)
     {
@@ -102,7 +119,7 @@ int Gun::UpDate(KeyDate keyData,double delta)
         else
         {
             if(targets.size() == 0)
-            return point;
+            return point * 4;
         }
     }
 
@@ -115,13 +132,21 @@ void Gun::Draw(void)
 
     for (int b = 0; b < shotCnt; ++b)
     {
-        DrawLine(10 * b + 10, 10, 10 * b + 10, 20, 0xffff00, 5);
+        DrawGraph(10 * b + 10, 10,
+            gunImage, true);
     }
 
+    for (auto ht : hTargets)
+    {
+        DrawGraph(ht.pos.x_ - ht.size,
+            ht.pos.y_ - ht.size,
+            bangImage, true);
+    }
     for (auto target : targets)
     {
-        DrawCircle(target.pos.x_, target.pos.y_,
-            target.size, 0xffffff, true);
+        DrawGraph(target.pos.x_ - target.size,
+            target.pos.y_ - target.size,
+            targetImage, true);
     }
 
     for (int b = 1; b <= 5; ++b)

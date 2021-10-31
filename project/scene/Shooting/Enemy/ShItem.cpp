@@ -1,13 +1,14 @@
 #include "ShItem.h"
 #include "../ShPlayer.h"
 
-ShItem::ShItem(ShPlayer* _player, Vector2F _pos)
+ShItem::ShItem(ShPlayer* _player, Vector2F _pos, int _image,int iNo)
 {
     player = _player;
     pos = _pos;
     vec = { -3.0,0 };
+    image = _image;
 
-    mode = (ShotMode)(rand() % 3 + 1);
+    mode = (ShotMode)(iNo);
 }
 
 ShItem::~ShItem()

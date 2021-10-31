@@ -1,10 +1,11 @@
 #include "ShTackle.h"
 #include "../ShPlayer.h"
-ShTackle::ShTackle(ShPlayer* _player, Vector2F _pos)
+ShTackle::ShTackle(ShPlayer* _player, Vector2F _pos, int _image)
 {
     player = _player;
     pos = _pos;
     vec = { -9.0f,0 };
+    image = _image;
 }
 
 ShTackle::~ShTackle()

@@ -1,11 +1,12 @@
 #include "ShTreasure.h"
 #include "../Shooting.h"
 
-ShTreasure::ShTreasure(Shooting* _shooting, Vector2F _pos)
+ShTreasure::ShTreasure(Shooting* _shooting, Vector2F _pos, int _image)
 {
 	scene = _shooting;
     pos = _pos;
     vec = { -3,0 };
+    image = _image;
 }
 
 ShTreasure::~ShTreasure()

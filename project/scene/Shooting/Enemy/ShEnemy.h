@@ -21,6 +21,7 @@ protected:
 	Vector2F vec;
 	double shotTime;
 	bool kill = false;
+	int image;
 
 	Shooting* scene;
 };

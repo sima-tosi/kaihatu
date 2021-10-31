@@ -32,6 +32,8 @@ void Snake::Init(void)
 
     SetItem();
     breakTime = 0.0;
+
+    screen = MakeScreen(64 * 10, 64 * 10);
 }
 
 void Snake::GetItem(void)
@@ -182,6 +184,8 @@ int Snake::UpDate(KeyDate keyData,double delta)
                 break;
             }
 
+            body[0].ent = static_cast<DIR>((moveDir.first + 2) % 4);
+
             if (body[0].pos.x_ >= 10 || body[0].pos.x_ < 0 ||
                 body[0].pos.y_ >= 10 || body[0].pos.y_ < 0)
             {
@@ -195,12 +199,6 @@ int Snake::UpDate(KeyDate keyData,double delta)
 
     if (item.limit <= 0.0)  SetItem();
     if (timeLimit <= 0.0)miss = true;
-
-    if (keyData[InputID::SPACE][Trg::Now] &&
-        !keyData[InputID::SPACE][Trg::Old])
-    {
-        return 0;
-    }
 
     item.limit -= delta;
     count += delta;
@@ -216,7 +214,10 @@ void Snake::Draw(void)
 {
     int size = 64;
 
-    DrawBox(0, 0, size * 12, size * 12, 0xffffff, true);
+    DrawBox(0, 0, size * 12, size * 12, 0x0000ff, true);
+
+    SetDrawScreen(screen);
+    ClsDrawScreen();
 
     for (int x = 0; x < 10; ++x)
     {
@@ -224,33 +225,170 @@ void Snake::Draw(void)
         {
             if (obs[y * 10 + x])
             {
-                DrawBox(x * size + size, y * size + size,
-                    (x + 1) * size + size, (y + 1) * size + size,
+                DrawBox(x * size, y * size,
+                    (x + 1) * size, (y + 1) * size,
                     0x999999, true);
             }
             else
             {
-                DrawBox(x * size + size, y * size + size,
-                    (x + 1) * size + size, (y + 1) * size + size,
+                DrawBox(x * size, y * size,
+                    (x + 1) * size, (y + 1) * size,
                     0x00ff00, true);
             }
 
+            DrawBox(x * size, y * size,
+                (x + 1) * size, (y + 1) * size,
+                0xffffff, false);
+
             if (item.pos.x_ == x && item.pos.y_ == y)
             {
-                DrawCircle(x * size + size / 2 + size, y * size + size / 2 + size,
-                    8, 0xff0000,item.destor);
-                DrawLine(x * size + size, y * size + (size / 4 * 3) + size,
-                        x * size + size * (item.limit / MAX_TIME) + size,
-                        y * size + size + (size / 4 * 3), 0xff0000,5);
+                if (item.destor)
+                    DrawCircle(x * size + size / 2, y * size + size / 2,
+                        8, 0xffff00, true);
+                else
+                    DrawCircle(x * size + size / 2, y * size + size / 2,
+                        8, 0xff0000,true);
+
+                DrawLine(x * size, y * size + (size / 4 * 3),
+                        x * size + size * (item.limit / MAX_TIME),
+                        y * size+ (size / 4 * 3), 0xff0000,5);
             }
         }
     }
 
-    for (auto b : body)
+    int sColor = 0x000000;
+    if (breakTime > 0.0) sColor = 0xffff00;
+
+    // ‚ ‚½‚Ü
+    Vector2 ePos = body[0].pos * Vector2{ size,size } + Vector2{ size / 2,size / 2 };
+    Vector2 sPos = ePos;
+    switch (body[0].ent)
     {
-        DrawCircle(b.pos.x_ * size + size / 2 + size,
-            b.pos.y_ * size + size / 2 + size, 10, 0xff0000);
+    case DIR::DOWN:
+        sPos.y_ += size / 2;
+        break;
+    case DIR::LEFT:
+        sPos.x_ -= size / 2;
+        break;
+    case DIR::RIGHT:
+        sPos.x_ += size / 2;
+        break;
+    case DIR::UP:
+        sPos.y_ -= size / 2;
+        break;
     }
+    if (!turn)
+    {
+        DrawLine(sPos.x_, sPos.y_, ePos.x_, ePos.y_, sColor, 3);
+        sPos = ePos;
+        switch (body[0].exit)
+        {
+        case DIR::DOWN:
+            ePos.y_ += size / 2;
+            break;
+        case DIR::LEFT:
+            ePos.x_ -= size / 2;
+            break;
+        case DIR::RIGHT:
+            ePos.x_ += size / 2;
+            break;
+        case DIR::UP:
+            ePos.y_ -= size / 2;
+            break;
+        }
+    }
+    Vector2 diff = ePos - sPos;
+    DrawLine(sPos.x_, sPos.y_,
+        sPos.x_ + diff.x_ * (count/ 0.25), sPos.y_ + diff.y_ * (count / 0.25),
+        sColor, 3);
+
+    // ‚©‚ç‚¾
+    for (int no =1;no < body.size() - 1;++no)
+    {
+        Vector2 ePos = body[no].pos * Vector2{ size,size } + Vector2{ size / 2,size / 2 };
+        Vector2 sPos = ePos;
+        switch (body[no].ent)
+        {
+        case DIR::DOWN:
+            sPos.y_ += size / 2;
+            break;
+        case DIR::LEFT:
+            sPos.x_ -= size / 2;
+            break;
+        case DIR::RIGHT:
+            sPos.x_ += size / 2;
+            break;
+        case DIR::UP:
+            sPos.y_ -= size / 2;
+            break;
+        }
+        DrawLine(sPos.x_, sPos.y_, ePos.x_, ePos.y_, sColor, 3);
+        sPos = ePos;
+        switch (body[no].exit)
+        {
+        case DIR::DOWN:
+            ePos.y_ += size / 2;
+            break;
+        case DIR::LEFT:
+            ePos.x_ -= size / 2;
+            break;
+        case DIR::RIGHT:
+            ePos.x_ += size / 2;
+            break;
+        case DIR::UP:
+            ePos.y_ -= size / 2;
+            break;
+        }
+        DrawLine(sPos.x_, sPos.y_, ePos.x_, ePos.y_, sColor, 3);
+    }
+
+    // ‚µ‚Á‚Û
+    int no = body.size() - 1;
+    ePos = body[no].pos * Vector2{ size,size } + Vector2{ size / 2,size / 2 };
+    sPos = ePos;
+    switch (body[no].exit)
+    {
+    case DIR::DOWN:
+        sPos.y_ += size / 2;
+        break;
+    case DIR::LEFT:
+        sPos.x_ -= size / 2;
+        break;
+    case DIR::RIGHT:
+        sPos.x_ += size / 2;
+        break;
+    case DIR::UP:
+        sPos.y_ -= size / 2;
+        break;
+    }
+    if (turn)
+    {
+        DrawLine(sPos.x_, sPos.y_, ePos.x_, ePos.y_, sColor, 3);
+        sPos = ePos;
+        switch (body[no].ent)
+        {
+        case DIR::DOWN:
+            ePos.y_ += size / 2;
+            break;
+        case DIR::LEFT:
+            ePos.x_ -= size / 2;
+            break;
+        case DIR::RIGHT:
+            ePos.x_ += size / 2;
+            break;
+        case DIR::UP:
+            ePos.y_ -= size / 2;
+            break;
+        }
+    }
+    diff = ePos - sPos;
+    DrawLine(sPos.x_, sPos.y_,
+        sPos.x_ + diff.x_ *  (1 - (count / 0.25)), sPos.y_ + diff.y_ * (1 - (count / 0.25)),
+        sColor, 3);
+
+    SetDrawScreen(DX_SCREEN_BACK);
+
+    DrawGraph(size, size, screen, true);
 
     DrawLine(780, 768,
         780, 768 - (768 * (timeLimit / MAX_TIME)), 0xff0000, 10);

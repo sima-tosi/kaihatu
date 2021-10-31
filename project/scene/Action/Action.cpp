@@ -19,6 +19,9 @@ Action::~Action()
 }
 void Action::Init(void)
 {
+	enemyImage.resize(4);
+	LoadDivGraph("image/Action/enemy.png", 4, 4, 1, 64, 64, &(enemyImage[0]));
+
 	map = new AcMap(&(*this));
 	camera = new AcCamera(map->GetMapSize().x_ * map->GetChipSize().x_, 1024);
     player = std::make_unique<AcPlayer>(camera,map);
@@ -46,15 +49,15 @@ void Action::SetEnemy(void)
 			case 0:
 				break;
 			case 12:
-				enemy = std::make_unique<AcKuribo>(camera, map, pos);
+				enemy = std::make_unique<AcKuribo>(camera, map, pos,enemyImage[0]);
 				enemys.push_back(std::move(enemy));
 				break;
 			case 13:
-				enemy = std::make_unique<AcTogezo>(camera, map, pos);
+				enemy = std::make_unique<AcTogezo>(camera, map, pos, enemyImage[1]);
 				enemys.push_back(std::move(enemy));
 				break;
 			case 14:
-				enemy = std::make_unique<AcDosunn>(camera, map, pos);
+				enemy = std::make_unique<AcDosunn>(camera, map, pos, enemyImage[2]);
 				enemys.push_back(std::move(enemy));
 				break;
 			}
@@ -84,13 +87,13 @@ int Action::UpDate(KeyDate keyData,double delta)
 	{
 		float score = player->GetPos().x_;
 		score /= map->GetMapSize().x_ * map->GetChipSize().x_;
-		score *= 50;
+		score *= 40;
 
 		return (int)score;
 	}
 	if (clear)
 	{
-		double score = 50.0;
+		double score = 40.0;
 		score += limitTime;
 
 		return (int)score;
@@ -125,6 +128,6 @@ void Action::makeItem(Vector2 pos, Vector2 size)
 	iPos.x_ += size.x_ / 2;
 	iPos.y_ -= size.y_ / 2;
 
-	UniEne enemy = std::make_unique<AcItem>(camera, map,iPos);
+	UniEne enemy = std::make_unique<AcItem>(camera, map,iPos, enemyImage[3]);
 	enemys.push_back(std::move(enemy));
 }

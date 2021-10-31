@@ -38,6 +38,9 @@ void Puzle::Init(void)
         nPiece.insert(nPiece.begin(), mpart);
     }
 
+    pieceImage.resize(9);
+    LoadDivGraph("image/puzle/piece.png", 9, 3, 3, 60, 60, &(pieceImage[0]));
+
     screen = MakeScreen(pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y);
 }
 
@@ -169,6 +172,8 @@ void Puzle::Drop(void)
 void Puzle::Kill(void)
 {
     bool nMove = true;
+    std::vector<bool> allkillMap;
+    allkillMap.resize(SIZE_X * SIZE_Y);
 
     std::for_each(piece.rbegin(), piece.rend(), [&](PIECE& part)
     {
@@ -187,9 +192,9 @@ void Puzle::Kill(void)
                     {
                         ++cnt;
                         if (killMap[part.mapPos()] != P_C::ALL)
-                        {
                             map[part.mapPos()] = P_C::NON;
-                        }
+                        else allkillMap[part.mapPos()] = true;
+
                         part.kill = true;
                         JyamaKill(part.mapPos() + 1);
                         JyamaKill(part.mapPos() - 1);
@@ -254,6 +259,11 @@ void Puzle::Kill(void)
     }
     else
     {
+        for (auto& part : piece)
+        {
+            if(allkillMap[part.mapPos()])
+                map[part.mapPos()] = P_C::NON;
+        }
         ++chain;
         auto o = std::remove_if(piece.begin(), piece.end(), [](PIECE& part) {return part.kill; });
         for (auto itr = o; itr != piece.end(); ++itr)
@@ -469,9 +479,9 @@ int Puzle::UpDate(KeyDate keyData,double delta)
         break;
     }
 
-    if (timelimit <= 0.0)
+    if (timelimit <= 0.0 || mode == MODE::FINISH)
     {
-        return score;
+        return score * 1.5;
     }
 
     return -1;
@@ -485,13 +495,12 @@ void Puzle::Draw(void)
     SetDrawScreen(screen);
     ClsDrawScreen();
 
-    DrawBox(0, 0, pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y, 0xffa500, true);
+    DrawBox(0, 0, pieceSize.x_ * SIZE_X, pieceSize.y_ * SIZE_Y, 0xffffff, true);
 
     for (auto part : piece)
     {
-        DrawBox((part.pos.x_) * pieceSize.x_, (part.pos.y_) * pieceSize.y_,
-            (part.pos.x_) * pieceSize.x_ + pieceSize.x_, (part.pos.y_) * pieceSize.y_ + pieceSize.y_,
-            GetPieceImage(part.color), true);
+        DrawGraph((part.pos.x_) * pieceSize.x_, (part.pos.y_) * pieceSize.y_,
+            GetPieceImage(part.color,part.bombL), true);
     }
 
     SetDrawScreen(DX_SCREEN_BACK);
@@ -502,9 +511,8 @@ void Puzle::Draw(void)
     int cnt = 0;
     for (auto part : hPiece)
     {
-        DrawBox(holdOff.x_, holdOff.y_ + (cnt * pieceSize.y_),
-            holdOff.x_ + pieceSize.x_, holdOff.y_ + (cnt * pieceSize.y_) + pieceSize.y_,
-            GetPieceImage(part.color), true);
+        DrawGraph(holdOff.x_, holdOff.y_ + (cnt * pieceSize.y_),
+            GetPieceImage(part.color,false), true);
         ++cnt;
     }
 
@@ -514,27 +522,35 @@ void Puzle::Draw(void)
     {
         int nCnt = cnt < 2 ? 0 : 1;
 
-        DrawBox(nextOff.x_ + (nCnt * pieceSize.x_), nextOff.y_ + (cnt * pieceSize.y_) + 5,
-                nextOff.x_ + (nCnt * pieceSize.x_) + pieceSize.x_, nextOff.y_ + (cnt * pieceSize.y_) + pieceSize.y_ + 5,
-                GetPieceImage(part.color), true);
+        DrawGraph(nextOff.x_ + (nCnt * pieceSize.x_), nextOff.y_ + (cnt * pieceSize.y_) + 5,
+                GetPieceImage(part.color, false), true);
         ++cnt;
     }
 
     DrawString(0, 0, "PuzleScene", 0xffffff);
 }
 
-int Puzle::GetPieceImage(P_C color_)
+int Puzle::GetPieceImage(P_C color_,bool on)
 {
-    int color = 0xffffff;
+    int color = 0;
 
-    if (color_ == P_C::RED) color = 0xff0000;
-    if (color_ == P_C::BULE) color = 0x00ff00;
-    if (color_ == P_C::GREEN) color = 0x0000ff;
-    if (color_ == P_C::YELLOW) color = 0xFFD400;
-    if (color_ == P_C::PURPLE) color = 0x6F00FF;
-    if (color_ == P_C::JYAMA) color = 0x666666;
-    if (color_ == P_C::BOMB) color = 0x00ffff;
-    if (color_ == P_C::ALL) color = 0xffffff;
+    if (color_ == P_C::RED)     color = pieceImage[0];
+    if (color_ == P_C::BULE)    color = pieceImage[1];
+    if (color_ == P_C::GREEN)   color = pieceImage[2];
+    if (color_ == P_C::YELLOW)  color = pieceImage[3];
+    if (color_ == P_C::PURPLE)  color = pieceImage[4];
+    if (color_ == P_C::JYAMA)   color = pieceImage[5];
+    if (color_ == P_C::ALL)     color = pieceImage[6];
+    if (color_ == P_C::BOMB)
+    {
+        if (on) color = pieceImage[7];
+        else    color = pieceImage[8];
+    }
+
+    if (color == 0)
+    { 
+        int vsni = 0;
+    }
 
     return color;
 }

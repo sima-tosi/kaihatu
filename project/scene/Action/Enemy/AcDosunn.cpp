@@ -1,11 +1,12 @@
 #include "AcDosunn.h"
 #include <DxLib.h>
 
-AcDosunn::AcDosunn(AcCamera* camera, AcMap* map, Vector2F pos)
+AcDosunn::AcDosunn(AcCamera* camera, AcMap* map, Vector2F pos, int _image)
 {
 	mCamera = camera;
 	mMap = map;
 	AcDosunn::pos = pos;
+	image = _image;
 	Init();
 }
 

@@ -15,8 +15,8 @@ void AcEnemy::UpData(double delta, Vector2F pPos)
 
 	if (move)
 	{
-		pos.x_ += vec.x_;
-		int moveVec = vec.x_ > 0 ? 1 : -1;
+		pos.x_ -= vec.x_;
+		int moveVec = vec.x_ > 0 ? -1 : 1;
 
 		if(MapHitLR(moveVec)) AcEnemy::vec.x_ *= -1;
 
@@ -36,9 +36,8 @@ void AcEnemy::UpData(double delta, Vector2F pPos)
 void AcEnemy::Draw(void)
 {
 	float cameraPos = mCamera->GetPos();
-	DrawBox(pos.x_ - cameraPos - size.x_, pos.y_ - size.y_,
-		pos.x_ - cameraPos + size.x_, pos.y_ + size.y_,
-		0x994C00, true);
+	DrawGraph(pos.x_ - cameraPos - size.x_, pos.y_ - size.y_,
+		image, true);
 }
 
 void AcEnemy::MapHit(void)
@@ -82,7 +81,7 @@ bool AcEnemy::MapHitLR(int vec)
 	if (mMap->HitMap(cPos, 0, false) || mMap->HitMap(tPos, 0, false) || mMap->HitMap(dPos, 0, false))
 	{
 		int cPosX = mMap->BackPos(cPos, vec).x_;
-		pos.x_ = cPosX - (size.x_ * vec);
+		pos.x_ = cPosX - (size.x_ * vec) - 0.1 * (vec);
 		return true;
 	}
 	return false;

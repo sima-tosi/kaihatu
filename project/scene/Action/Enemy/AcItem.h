@@ -6,7 +6,7 @@ class AcItem :
 {
 public:
 
-	AcItem(AcCamera* camera, AcMap* map,Vector2F pos);
+	AcItem(AcCamera* camera, AcMap* map,Vector2F pos, int _image);
 
 	void Init(void) override;
 	UniPlay PlayerDeath(UniPlay player) override;

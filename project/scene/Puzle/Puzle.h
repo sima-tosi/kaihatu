@@ -24,8 +24,8 @@ enum class P_C
     YELLOW,
     PURPLE,
     JYAMA,
+    ALL,
     BOMB,
-    ALL
 };
 
 struct PIECE
@@ -57,7 +57,7 @@ private:
     void Drop(void);
     void Kill(void);
 
-    int GetPieceImage(P_C color_);
+    int GetPieceImage(P_C color_, bool on);
 
     void PieceVecKill(int vec);
     int CheckKill(P_C id, int vec, int cnt);
@@ -75,6 +75,7 @@ private:
     std::vector<P_C> map;
     std::vector<P_C> killMap;
 
+    std::vector<int> pieceImage;
     std::vector<PIECE> piece;
     std::vector<PIECE> hPiece;
     std::list<PIECE> nPiece;

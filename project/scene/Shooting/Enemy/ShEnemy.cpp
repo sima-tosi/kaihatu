@@ -14,9 +14,8 @@ void ShEnemy::UpData(double delta)
 
 void ShEnemy::Draw(void)
 {
-    DrawBox(pos.x_ - size.x_, pos.y_ - size.y_,
-        pos.x_ + size.x_, pos.y_ + size.y_,
-        0xff0000, true);
+    DrawGraph(pos.x_ - size.x_, pos.y_ - size.y_,
+        image, true);
 }
 
 bool ShEnemy::PlayerHit(Vector2F pPos, Vector2F pSize)

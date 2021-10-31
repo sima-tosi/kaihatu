@@ -34,6 +34,7 @@ private:
     void resultDraw(void);
     void TestUpDate(KeyDate keyData);
 
+    int image[3];
     double resultTime = 0.0;
     double readyTime;
     double finishTime;

@@ -50,6 +50,8 @@ private:
     bool miss = false;
     int point;
 
+    int screen;
+
     std::pair<DIR, DIR> moveDir;
     double count;
     double timeLimit;

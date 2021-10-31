@@ -2,11 +2,12 @@
 #include "../AcCamera.h"
 #include "../AcPlayer.h"
 
-AcKuribo::AcKuribo(AcCamera* camera, AcMap* map, Vector2F pos)
+AcKuribo::AcKuribo(AcCamera* camera, AcMap* map, Vector2F pos, int _image)
 {
 	mCamera = camera;
 	mMap = map;
 	AcKuribo::pos = pos;
+	image = _image;
 	Init();
 }
 

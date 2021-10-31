@@ -18,7 +18,7 @@ Game::~Game()
 
 bool Game::Init(void)
 {
-    playCnt = 1;
+    playCnt = 0;
 
     gameList[0].name = Glist::ACTION;
     gameList[1].name = Glist::SHOOTING;
@@ -28,6 +28,8 @@ bool Game::Init(void)
     gameList[5].name = Glist::PUZLE;
 
     nowTime = std::chrono::system_clock::now();
+
+    LoadDivGraph("image/image.png", 3, 1, 3, 576, 192, image);
 
     return true;
 }
@@ -123,11 +125,14 @@ void Game::Draw(void)
 
         if (readyTime > 0.0)
         {
-            DrawBox(200, 200, 500, 500, 0xff0000, true);
+            if(readyTime > 1.0)
+                DrawGraph(200, 200, image[0], true);
+            else
+                DrawGraph(200, 200, image[1], true);
         }
         if (finishTime > 0.0)
         {
-            DrawBox(200, 200, 500, 500, 0x0000ff, true);
+            DrawGraph(200, 200, image[2], true);
         }
     }
     else

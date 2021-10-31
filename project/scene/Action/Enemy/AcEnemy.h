@@ -41,6 +41,7 @@ protected:
 	bool move = false;
 	bool kill = false;
 	bool turn = false;
+	int image;
 
 	AcCamera* mCamera;
 	AcMap* mMap;

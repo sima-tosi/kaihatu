@@ -9,6 +9,12 @@ struct Target
     int size;
     bool life;
 };
+struct HitTarget
+{
+    Vector2F pos;
+    int size;
+    double time;
+};
 class Gun :
     public Game
 {
@@ -21,12 +27,17 @@ private:
     void Init(void);
     void SetTarget(void);
 
+    int targetImage;
+    int bangImage;
+    int gunImage;
+
     int shotCnt;
     int targetCnt;
     double downTime;
 
     Vector2F shotPos;
     std::list<Target> targets;
+    std::list<HitTarget> hTargets;
     int point;
 };
 

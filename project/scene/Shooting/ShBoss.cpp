@@ -15,7 +15,7 @@ ShBoss::ShBoss(Shooting* _shooting,ShPlayer* _player)
     shotPos.emplace_back(0, -128);
     shotPos.emplace_back(0, 64);
     shotPos.emplace_back(0, 128);
-    escapeTime = 30.0;
+    escapeTime = 120.0;
 
     life = MAX_LIFE;
     vecY = 1;
@@ -105,8 +105,8 @@ void ShBoss::Draw(void)
     DrawCircle(pos.x_ + shotPos2.x_, pos.y_ + shotPos2.y_,
         5, 0xffff00);
 
-    DrawLine(0, 10, 1028 * (life / MAX_LIFE), 10, 0xffffff, 10);
-    DrawLine(0, 20, 1028 * (escapeTime / 30.0), 20, 0x00ffff, 10);
+    DrawLine(0, 10, 1028 / 100 * life, 10, 0xffffff, 10);
+    DrawLine(0, 20, 1028 * (escapeTime / 120.0), 20, 0x00ffff, 10);
 }
 
 bool ShBoss::PlayerHit(Vector2F pPos, Vector2F pSize)
@@ -119,10 +119,10 @@ bool ShBoss::PlayerHit(Vector2F pPos, Vector2F pSize)
 
 bool ShBoss::ShotHit(Vector2F sPos, Vector2F sSize)
 {
-    if (sPos.x_ + sSize.x_ > pos.x_ - size.x_ &&
-        sPos.x_ - sSize.x_ < pos.x_ + size.x_ &&
-        sPos.y_ + sSize.y_ > pos.y_ - size.y_ &&
-        sPos.y_ - sSize.y_ < pos.y_ + size.y_)
+    if (sPos.x_ + sSize.x_ > pos.x_ - hitSize.x_ &&
+        sPos.x_ - sSize.x_ < pos.x_ + hitSize.x_ &&
+        sPos.y_ + sSize.y_ > pos.y_ - hitSize.y_ &&
+        sPos.y_ - sSize.y_ < pos.y_ + hitSize.y_)
     {
         --life;
         return true;

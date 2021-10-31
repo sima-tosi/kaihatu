@@ -23,13 +23,13 @@ public:
 private:
     void Init(void);
     void SetEnemy(void);
-    std::map<int, std::vector<int>> enemyImage;
 
     bool clear;
     int GameScreen;
 
     std::unique_ptr<AcPlayer> player;
     std::list <std::unique_ptr<AcEnemy>> enemys;
+    std::vector<int> enemyImage;
     AcCamera* camera;
     AcMap* map;
 

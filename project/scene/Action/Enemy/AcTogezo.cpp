@@ -1,10 +1,11 @@
 #include "AcTogezo.h"
 
-AcTogezo::AcTogezo(AcCamera* camera, AcMap* map, Vector2F pos)
+AcTogezo::AcTogezo(AcCamera* camera, AcMap* map, Vector2F pos, int _image)
 {
 	mCamera = camera;
 	mMap = map;
 	AcTogezo::pos = pos;
+	image = _image;
 	Init();
 }
 

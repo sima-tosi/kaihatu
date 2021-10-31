@@ -1,11 +1,12 @@
 #include "ShTriple.h"
 #include "../Shooting.h"
 
-ShTriple::ShTriple(Shooting* _shooting, Vector2F _pos)
+ShTriple::ShTriple(Shooting* _shooting, Vector2F _pos, int _image)
 {
 	scene = _shooting;
     pos = _pos;
     vec = { -7,0 };
+    image = _image;
 }
 
 ShTriple::~ShTriple()
